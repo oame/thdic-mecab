@@ -1,20 +1,24 @@
-* æ±æ–¹MeCabè¾æ›¸ç¬¬äºŒç‰ˆ
+æ±æ–¹MeCabè¾æ›¸ç¬¬äºŒç‰ˆ
+------------------
 author: ãŠãŠã‚ã‚
 
 license: -> LICENSE.md
 
-* Required environment
-- MeCab
-- Ruby 1.9.x
+Required environment
+------------------
+* MeCab
+* Ruby 1.9.x
 
-* Quick installation
+Quick installation
+------------------
 run ./make.sh
 
-* Overview
-compile_dict.rb - csvŒ`®‚Ì«‘‚ğdicŒ`®‚É•ÏŠ·‚µ‚Ü‚·
-create_middle_dict.rb - thdic/*‚ÌŒêœbƒf[ƒ^‚ğMeCabƒtƒH[ƒ}ƒbƒg‚Ìcsv‚É•ÏŠ·‚µ‚Ü‚·
-thdic/* - Œêœbƒf[ƒ^
-make.sh - «‘ì¬‚ğ©“®‰»‚µ‚½ƒVƒFƒ‹ƒXƒNƒŠƒvƒg
-ipadic/* IPA«‘
-LICENSE.md - ƒ‰ƒCƒZƒ“ƒX
-README.md - ‚±‚ê
+Overview
+------------------
+* compile_dict.rb - csvå½¢å¼ã®è¾æ›¸ã‚’dicå½¢å¼ã«å¤‰æ›ã—ã¾ã™
+* create_middle_dict.rb - thdic/*ã®èªå½™ãƒ‡ãƒ¼ã‚¿ã‚’MeCabãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®csvã«å¤‰æ›ã—ã¾ã™
+* thdic/* - èªå½™ãƒ‡ãƒ¼ã‚¿
+* make.sh - è¾æ›¸ä½œæˆã‚’è‡ªå‹•åŒ–ã—ãŸã‚·ã‚§ãƒ«ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
+* ipadic/* IPAè¾æ›¸
+* LICENSE.md - ãƒ©ã‚¤ã‚»ãƒ³ã‚¹
+* README.md - ã“ã‚Œ
