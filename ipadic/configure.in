@@ -1,0 +1,100 @@
+AC_INIT(connect.cha)
+AC_PREREQ(2.13)
+AM_INIT_AUTOMAKE(ipadic, 2.7.0)
+AM_MAINTAINER_MODE
+
+dnl
+dnl Checks for programs.
+dnl
+
+AC_PROG_INSTALL
+AC_PROG_MAKE_SET
+
+AC_ARG_WITH(
+    dicdir,
+        [  --with-dicdir=DIR  set dicdir location ],
+        AC_MSG_RESULT(using $with_dicdir for dicdir)
+	CHASEN_DIC_DIR=$with_dicdir, CHASEN_DIC_DIR="no"
+)
+
+AC_ARG_WITH(
+    mkchadic,
+        [  --with-mkchadic=DIR set mkchadic location ],
+        AC_MSG_RESULT(using $with_mkchadic for mkchadic)
+        CHASEN_MKCHADIC_DIR=$with_mkchadic, CHASEN_MKCHADIC_DIR="no"
+)
+
+AC_ARG_WITH(
+    chasenrc-path,
+        [  --with-chasenrc-path=FILE set chasenrc path ],
+        AC_MSG_RESULT(using $with_chasenrc_path for chasenrc-path)
+        CHASEN_CHASENRC_PATH=$with_chasenrc_path, CHASEN_CHASENRC_PATH="no"
+)
+
+if test $CHASEN_DIC_DIR = "no" || test $CHASEN_MKCHADIC_DIR = "no" || test $CHASEN_CHASENRC_PATH = "no"; 
+then
+    AC_ARG_WITH(
+	chasen-config,
+	[  --with-chasen-config=PATH  set chasen-config location [search path]],
+	AC_MSG_RESULT(using $with_chasen_config for chasen-config)
+	CHASEN_CONFIG=$with_chasen_config,
+	[AC_PATH_PROGS(CHASEN_CONFIG, chasen-config, no)]
+    )
+
+    if test $CHASEN_CONFIG = "no";
+    then
+	AC_MSG_ERROR(chasen_config required for making dictionary)
+    fi
+    AC_SUBST(CHASEN_CONFIG)
+
+    if test $CHASEN_DIC_DIR = "no"; 
+    then
+	CHASEN_DIC_DIR=`$CHASEN_CONFIG --dicdir`
+    fi 
+
+    if test $CHASEN_MKCHADIC_DIR = "no";
+    then
+	CHASEN_MKCHADIC_DIR=`$CHASEN_CONFIG --mkchadic`
+    fi
+
+    if test $CHASEN_CHASENRC_PATH = "no";
+    then
+	CHASEN_CHASENRC_PATH=`$CHASEN_CONFIG --chasenrc-path`
+    fi
+
+fi     
+
+AC_SUBST(CHASEN_DIC_DIR)
+AC_SUBST(CHASEN_MKCHADIC_DIR)
+AC_SUBST(CHASEN_CHASENRC_PATH)
+
+EMACS=emacs
+AC_ARG_WITH(emacs,
+[  --with-emacs=EMACS      Use EMACS for producing info files [default=emacs]],
+[EMACS=$with_emacs])
+AC_SUBST(EMACS)
+
+TEX=ptex
+AC_ARG_WITH(tex,
+[  --with-tex=TEX          Use TEX for producing dvi files [default=ptex]],
+[TEX=$with_tex])
+AC_SUBST(TEX)
+
+
+CHASEN_LEXICAL_DIC=`echo *.dic`
+AC_SUBST(CHASEN_LEXICAL_DIC)
+
+CHASEN_MANUAL_FILES="INSTALL-ja doc/ipadic-ja.pdf"
+AC_SUBST(CHASEN_MANUAL_FILES)
+
+CHASEN_GENDATA="matrix.cha table.cha chadic.da chadic.lex chadic.dat"
+AC_SUBST(CHASEN_GENDATA)
+
+CHASEN_PREDATA="grammar.cha ctypes.cha cforms.cha chasenrc connect.cha Makefile.bat" 
+AC_SUBST(CHASEN_PREDATA)
+
+AC_OUTPUT([Makefile chasenrc ipadic.spec version.cha doc/Makefile])
+# Local Variables:
+# mode:shell-script
+# sh-indentation:4
+# End:

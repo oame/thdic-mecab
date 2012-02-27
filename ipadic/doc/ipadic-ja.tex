@@ -1,0 +1,2601 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                                       
+%%%  形態素解析用辞書 ipadic manual
+%%%                                       
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentstyle[ascmac,titlepage]{jarticle}
+
+\topmargin -10mm
+\textheight 240mm
+\oddsidemargin -5mm
+\textwidth 165mm
+
+\def\+{\verb+}
+\def\*{\verb**}
+
+%\input a4
+
+\title{
+\bf ipadic version 2.7.0 ユーザーズマニュアル 
+}
+\author{浅原正幸 ~ 松本裕治}
+\date{平成 15 年 11 月\\
+\rule{0mm}{110mm} Copyright \copyright\ 2003 奈良先端科学技術大学院大学 情報科学研究科 自然言語処理学講座} 
+
+\def\*{\verb**}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+
+\vspace*{\fill}
+
+\begin{footnotesize}
+\noindent
+IPADIC version 2.7.0 Users Manual
+
+\noindent
+Masayuki Asahara and Yuji Matsumoto
+
+\noindent
+Copyright (c) 2003 Nara Institute of Science and Technology,
+All rights reserved.
+
+This edition is for "IPADIC for Japanese" version 2.7.0.
+
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+
+Permission is granted to copy and distribute modified versions of this
+manual under the above conditions for above verbatim copying, provided 
+that the entire resulting derived work is distributed under the terms 
+of a permission notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions.
+
+この版は IPADIC version 2.7.0 に対応する．
+
+著作権表示とこの許可文がすべての複製に存在する限り，
+この説明書のまったく同一の複製を作り，配布することを許可する．
+
+同一複製の条件の下で，それによって得られた結果もこの許可文の表示と同一の
+条件のもとで配布する限り，この説明書の修正版の複製をし，配布することを許
+可する．
+
+上記の修正版に関する条件の下で，この説明書の翻訳の複製を作り，
+配布することを許可する．
+
+
+% Permission is granted to process this file through TeX and print the
+% results, provided the printed document carries copying permission
+% notice identical to this one except for the removal of this paragraph
+% (this paragraph not being relevant to the printed manual).
+
+% この段落が取り除かれているのを除き，これと同じ複製に関する許可文が表示さ
+% れている限り，このファイルを TeX にかけて，その結果を印刷することを許可
+% する(この段落は印刷されたマニュアルでは参照されません)．
+
+\end{footnotesize}
+
+\vspace*{1em}
+
+\begin{small}
+\noindent
+\begin{tabular}{ll}
+version 1.0b & 25 May 1998 \\
+version 1.0  & 27 April 1999 \\
+version 2.0  & 15 December 1999 \\
+version 2.1  & 30 December 1999 \\
+version 2.4.0 & 6 December 2000 \\
+% version 2.4.1 &  7 December 2000 \\
+% version 2.4.2 & 22 February 2001 \\
+% version 2.4.3 & 28 February 2001 \\
+% version 2.4.4 &  4 March 2001  \\
+version 2.5.0 & 13 April 2001 \\
+% version 2.5.1 & 30 January 2002 \\
+version 2.6.0 & 19 June 2003 \\
+% version 2.6.1 & 2 August 2003 \\
+% version 2.6.2 & 6 August 2003 \\
+% version 2.6.3 & 15 August 2003 \\
+version 2.7.0 & 15 November 2003 \\
+\end{tabular}
+\end{small}
+
+\clearpage
+
+\pagenumbering{roman}
+\tableofcontents
+
+\clearpage
+\pagenumbering{arabic}
+%----------------------------------------%
+%           本文                         %
+%----------------------------------------%
+
+\section*{はじめに}
+
+形態素解析システム茶筌は，言語処理のためのフリーソフトウェアとして奈良先
+端科学技術大学院大学より公開されているシステムです．本辞書は，茶筌
+(version2.3.2以降)用の日本語辞書 (ipadic2.7.0)について説明したものです．本
+辞書では，情報処理振興事業協会(IPA)で設定されたIPA品詞体系(THiMCO97)に基
+づいて一部修正を加えました．本説明書は新情報処理開発機構(RWCP)による「テ
+キストデータベース報告書(平成８年度)」に掲載されたIPA品詞体系(THiMCO97)
+の説明を許可を得て抜粋し，一部修正を施したものです．
+
+なお，現在のIPA品詞体系日本語辞書は，1998年5月に公開したIPA品詞体系日本
+語辞書(ipadic1.0b2)に対して，奈良先端科学技術大学院大学情報科学研究科鹿
+野清宏教授を代表とする「日本語ディクテーション基本ソフトウェアの開発」
+(IPA独創的先進的情報技術に関わる研究開発)のグループの方々に大幅な修正，
+改良を行っていただき，その後，様々な修正を行ったものです．
+
+本辞書システムの構築に携わられたすべての方々にに対して心より感謝します．
+
+\vfill
+
+\noindent
+本マニュアルに関するお問い合わせは以下にお願いします．
+
+\noindent
+〒630-0192\\
+奈良県生駒市高山町8916-5\\
+奈良先端科学技術大学院大学\\
+情報科学研究科\ 自然言語処理学講座\\
+
+Tel: (0743)72-5240,\ Fax: (0743)72-5249\\
+E-mail: {\sf chasen@is.aist-nara.ac.jp}
+
+~\\
+\noindent
+また以下のURLにて最新情報を提供しています．
+
+\noindent
+URL: {\sf http://chasen.aist-nara.ac.jp/}
+
+\clearpage
+
+%----------------------------------------%
+\section{インストール}
+
+\subsection{UNIX における辞書インストール}
+
+本辞書は chasen-2.3.2 以上を必要とする．
+先に茶筌をダウンロードしインストールする．
+
+通常のインストール方法
+
+\begin{enumerate}
+ \item {\tt ./configure}を実行する．
+
+\begin{screen}\begin{verbatim}
+%./configure
+\end{verbatim}\end{screen}
+
+インストール先ディレクトリは茶筌側が要求するため自動的に設定される．
+インストール先を手動で変更したい場合は以下のように実行する．
+
+\begin{screen}\begin{verbatim}
+% ./configure --with-dicdir=/home/masayu-a
+\end{verbatim}\end{screen}
+
+すると，/home/masayu-a/ipadic 以下に辞書が作成される．
+
+\item  {\tt make} を実行する．
+
+\begin{screen}\begin{verbatim}
+% make
+\end{verbatim}\end{screen}
+
+OS 標準の make を使うとコンパイルに失敗することがある．
+その場合は GNU make を使用する．
+
+\item  root 権限で {\tt make install} を実行する．
+
+\begin{screen}\begin{verbatim}
+# make install
+\end{verbatim}\end{screen}
+
+       デフォルトでは {\tt /usr/local/share/chasen/dic/ipadic} にインス
+       トールされる(環境によって多少異なることもある)．
+
+       ユーザーのディレクトリにインストールする場合には，root 権限は必要
+       としない．
+
+\item  {\tt /usr/local/etc/chasenrc} の編集
+
+       chasen を初めてインストールし，辞書を初めてインストールするのであ
+       れば，インストーラが自動的に {\tt /usr/local/etc/chasenrc} を作成
+       する．そうでない場合，パッケージ中に生成される {\tt chasenrc}を見
+       ながら{\tt /usr/local/etc/chasenrc} を編集する必要がある．
+\end{enumerate}
+
+\subsection{Windows における辞書インストール}
+
+以下の説明では，wincha が次に示すような形でインストールされていると仮定する．
+
+\begin{screen}\begin{verbatim}
+c:\Program Files\chasen21\dic
+c:\Program Files\chasen21\dll
+c:\Program Files\chasen21\doc
+c:\Program Files\chasen21\mkchadic
+c:\Program Files\chasen21\wincha
+c:\Program Files\chasen21\wvshell
+\end{verbatim}\end{screen}
+
+WinCha をインストールすると，自動的に IPADIC がインストールされる．
+しかし，ユーザーが辞書に手を入れる場合には，SJIS の辞書パッケージを
+用意する必要がある．SJIS の辞書は以下にある．
+
+{\tt http://chasen.aist-nara.ac.jp/stable/ipadic/win/}
+
+展開された辞書ファイル ({\tt Noun.dic} など，拡張子 {\tt .dic} で終わ
+るファイル) ，連接表ファイル ({\tt connect.cha})， 品詞定義ファイル
+({\tt grammar.cha})，活用型定義ファイル ({\tt ctypes.cha})，活用形定義
+ファイル ({\tt cforms.cha}) を， Windows 版の茶筌がインストールされてい
+るディレクトリの中にある \verb+c:\Program Files\chasen21\dic+ というディレクトリの下にコピーする． 
+
+辞書パッケージ中にある，{\tt Makefile.bat} を
+\verb+c:\Program Files\chasen21+ にコピーし，
+コマンドプロンプトで {\tt Makefile.bat} を実行する．
+
+\begin{screen}\begin{verbatim}
+C:\Program Files\chasen21> Makefile.bat
+\end{verbatim}\end{screen}
+
+Windows XP/2000/NT などでは Administrator 権限でインストールする必要がある．
+% \subsection{rpm におけるインストールに関する諸注意}
+
+% RPM パッケージからインストールすると，
+% 各ユーザーが手を入れることができる辞書ファイルはインストールされない．
+
+% 辞書ファイルに手を入れる場合は，
+% {\tt ipadic-X.X.X.src.rpm}を展開し中のファイルに手を入れてリビルドするか，
+% {\tt ipadic-X.X.X.tar.gz} のファイルをダウンロードして他の OS と同じよう
+% にしてインストールする．この際，展開した辞書ディレクトリを {\tt chasenrc}
+% ファイルなどから指定する必要がある．
+
+% また，rpm でインストールした場合，
+% {\tt /usr/share/chasen/dic/ipadic/chasenrc}
+% を見ながら{\tt /usr/etc/chasenrc} を編集する必要がある．
+
+
+\section{各ファイルのフォーマット}
+
+\subsection{品詞定義ファイルの品詞定義}
+
+フォーマットファイル {\tt grammar.cha} には品詞のリストを記述する．
+活用する品詞である場合 $\langle$最上位品詞定義$\rangle$ に {\tt \%} がつけられる．
+活用する品詞には，{\tt ctypes.cha}に可能な活用型を列挙し，
+{\tt cforms.cha}に可能な活用形を記述する必要がある．
+
+\begin{screen}\begin{verbatim}
+(接頭詞
+    (名詞接続)
+    (動詞接続)
+    (形容詞接続)
+    (数接続))
+
+(動詞%
+    (自立)
+    (非自立)
+    (接尾))
+\end{verbatim}\end{screen}
+
+
+\begin{itemize}
+ \item $\langle$品詞定義$\rangle$ ::= "($\langle$最上位品詞情報$\rangle$ ($\langle$下位品詞情報$\rangle$)*)"
+ \item $\langle$最上位品詞定義$\rangle$ ::= $\langle$最上位品詞名
+       $\rangle | $"$\langle$最上位品詞名$\rangle$\%"
+ \item $\langle$下位品詞定義$\rangle$ ::= $\langle$品詞細分類名$\rangle$ $|$ "$\langle$品詞細分類名$\rangle$ ($\langle$下位品詞情報$\rangle$)*"
+\end{itemize}
+
+
+\subsection{活用型定義ファイルのフォーマット}
+
+活用型定義ファイル {\tt ctypes.cha} には，各品詞がどのような活用型
+を取りうるかを記述する．
+
+\begin{screen}\begin{verbatim}
+((形容詞 自立)
+        (形容詞・アウオ段
+         形容詞・イ段
+         不変化型)
+)
+\end{verbatim}\end{screen}
+
+\begin{itemize}
+ \item $\langle$活用型定義$\rangle$ ::= "(($\langle$品詞名$\rangle$) ($\langle$活用型$\rangle$*))"
+\end{itemize}
+
+\subsection{活用形定義ファイルのフォーマット}
+
+活用形定義ファイル {\tt cforms.cha} には，各活用型がどのような活用形を取り，
+また各活用形がどのような活用語尾を取りうるかを記述する．
+活用語尾は，漢字形，かな形，発音形を記述することができる．
+
+\begin{screen}\begin{verbatim}
+(形容詞・イ段
+    (   ; (語幹            *             )
+     (基本形          い      イ    )
+     (文語基本形      *       *    )
+     (未然ヌ接続      から    カラ  )
+     (未然ウ接続      かろ    カロ  )
+     (連用タ接続      かっ    カッ  )
+     (連用テ接続      く      ク    )
+     (連用テ接続      くっ    クッ  )
+     (連用ゴザイ接続  ゅう    ュウ  ュー)
+     (連用ゴザイ接続  ゅぅ    ュゥ  ュー)
+     (体言接続        き      キ    )
+     (仮定形          けれ    ケレ  )
+     (命令ｅ          かれ    カレ  )
+     (仮定縮約１      けりゃ  ケリャ)
+     (仮定縮約２      きゃ    キャ  )
+     (ガル接続        *             ))
+)
+\end{verbatim}\end{screen}
+
+\begin{itemize}
+ \item $\langle$活用形定義$\rangle$ ::= "($\langle$活用型名$\rangle$ ($\langle$活用形情報$\rangle$*))"
+ \item $\langle$活用形情報$\rangle$ ::= "($\langle$活用形名$\rangle$ $\langle$漢字形活用語尾$\rangle$ $\langle$かな形活用語尾$\rangle$ 
+$\langle$発音活用語尾$\rangle$ )" $|$ "($\langle$活用形名$\rangle$ $\langle$漢字形活用語尾$\rangle$ $\langle$かな形活用語尾$\rangle$)"
+$|$ "($\langle$活用形名$\rangle$ $\langle$漢字形活用語尾$\rangle$)"
+\end{itemize}
+
+\subsection{辞書ファイルのフォーマット}
+
+以下は辞書ファイルの例である．
+辞書ファイルは各品詞毎に分割されている．
+
+\begin{screen}\begin{verbatim}
+(品詞 (名詞 一般)) ((見出し語 (お正月 3641))  (読み オショウガツ) (発音 オショーガツ))
+
+(品詞 (動詞 自立)) ((見出し語 (あきらめる 2377))  (読み アキラメル) (活用型 一段))
+
+(品詞 (名詞 一般)) ((見出し語 (天文学 3556))  (読み テンモンガク)
+  (複合語
+      ((品詞 (名詞 一般)) (見出し語 天文) (読み テンモン))
+    ((品詞 (名詞 接尾 一般)) (見出し語 学) (読み ガク)) ))
+\end{verbatim}\end{screen}
+
+辞書ファイル中の形態素エントリの定義は以下の通り．
+
+\begin{itemize}
+\item $\langle$形態素エントリ$\rangle$ ::= "($\langle$品詞情報$\rangle$) ($\langle$見出し語情報$\rangle$ $\langle$形態素情報$\rangle$*)"
+\item $\langle$品詞情報$\rangle$ ::= "(品詞 ($\langle$品詞名$\rangle$))"
+\item $\langle$見出し語情報$\rangle$ ::= "(見出し語 ($\langle$見出し語$\rangle$ $\langle$形態素生起コスト$\rangle$))" $|$ "(見出し語 $\langle$見出し語$\rangle$)"
+\item $\langle$形態素情報$\rangle$ ::= $\langle$読み情報$\rangle$ $|$ $\langle$発音情報$\rangle$ $|$ $\langle$活用型情報$\rangle$ $|$ $\langle$付加情
+報$\rangle$ $|$ $\langle$意味情報$\rangle$ $|$ $\langle$複合語情報$\rangle$
+\item $\langle$読み情報$\rangle$ ::= "(読み $\langle$読み$\rangle$)"
+\item $\langle$発音情報$\rangle$ ::= "(発音 $\langle$発音$\rangle$)"
+\item $\langle$活用型情報$\rangle$ ::= "(活用型 $\langle$活用型$\rangle$)"
+\item $\langle$複合語情報$\rangle$ ::= "(複合語 $\langle$構成語エントリ$\rangle$*)"
+\item $\langle$構成語エントリ$\rangle$ ::= "($\langle$品詞情報$\rangle$ $\langle$見出し語情報$\rangle$ $\langle$構成語形態素情報
+$\rangle$*)"
+\item $\langle$構成語形態素情報$\rangle$ ::= $\langle$読み情報$\rangle$ $|$ $\langle$発音情報$\rangle$ $|$ $\langle$活用型情報$\rangle$ $|$ $\langle$
+付加情報$\rangle$ $|$ $\langle$意味情報$\rangle$ $|$ $\langle$活用形情報$\rangle$
+\item $\langle$活用形情報$\rangle$ ::= "(活用形 $\langle$活用形$\rangle$)"
+\end{itemize}
+
+
+尚，$\langle$形態素情報$\rangle$ および $\langle$構成語形態素情報$\rangle$ の中に現れる項目の重複は許されない．
+
+\begin{itemize}
+\item $\langle$品詞名$\rangle$
+
+品詞名．階層構造をもつ．各階層は空白で区切られる．
+
+例:
+\begin{screen}\begin{verbatim}
+(品詞 (名詞 一般))
+(品詞 (動詞 自立))
+(品詞 (名詞 接尾 一般))
+\end{verbatim}\end{screen}
+
+\item $\langle$見出し語$\rangle$
+
+文章中に出現する表記．
+活用語は基本形のみを登録する．
+
+例:
+\begin{screen}\begin{verbatim}
+(見出し語 (お正月 3641))
+(見出し語 (あきらめる 2377))
+(見出し語 (天文学 3556))
+(見出し語 天文) 
+(見出し語 学)
+\end{verbatim}\end{screen}
+
+\item $\langle$形態素生起コスト$\rangle$
+
+見出し語の横にある数字を形態素生起コストという．
+数値が小さいほど出現しやすい語という意味になる．
+IPADIC の形態素生起コストは解析済みのデータから学習した単語の出現確率を
+元に計算した数値が付与されている．
+
+ユーザーが形態素を追加する際には，近い頻度を持つ形態素と同じ程度の数値にしてお
+けば，ほとんどの場合素直に解析に反映されるはずである．反映されない場合は，
+形態素コストの値を小さくしてみるとよい．
+
+例:
+\begin{screen}\begin{verbatim}
+(見出し語 (お正月 3641))
+(見出し語 (あきらめる 2377))
+(見出し語 (天文学 3556))
+\end{verbatim}\end{screen}
+
+\item $\langle$読み$\rangle$
+
+かな表記．カタカナで記述される．
+
+例:
+\begin{screen}\begin{verbatim}
+(読み オショウガツ) 
+(読み アキラメル)
+(読み テンモンガク)
+(読み テンモン)
+(読み ガク)
+\end{verbatim}\end{screen}
+
+\item $\langle$発音$\rangle$
+
+発音表記．カタカナで記述される．
+
+例:
+\begin{screen}\begin{verbatim}
+(発音 オショーガツ)
+\end{verbatim}\end{screen}
+
+\item $\langle$活用型$\rangle$
+
+活用語は「活用型」を要求する．活用型は ctypes.cha に定義されたもののみ許される．
+
+例:
+\begin{screen}\begin{verbatim}
+(活用型 五段・サ行)
+\end{verbatim}\end{screen}
+
+\item $\langle$活用形$\rangle$
+
+複合語を構成する形態素が活用語でありかつ基本形でない場合に，
+構成語エントリを記述するために利用する．
+
+例:
+\begin{screen}\begin{verbatim}
+(活用形 未然ウ接続)
+\end{verbatim}\end{screen}
+
+\item $\langle$付加情報$\rangle$
+
+単語エントリに対する付加情報．ユーザーが自由に利用できる．
+アクセント情報や他の品詞体系での品詞名などが記述できる．
+
+例:
+\begin{screen}\begin{verbatim}
+(付加情報 アクセント型=4) 
+\end{verbatim}\end{screen}
+
+\item $\langle$意味情報$\rangle$
+
+単語エントリに対する意味情報．ユーザーが自由に利用できる．
+シソーラスの情報や国語辞書の項目などを記述することができる．
+
+例:
+\begin{screen}\begin{verbatim}
+(意味情報 "思い切る。仕方がないと断念する。") 
+\end{verbatim}\end{screen}
+
+\end{itemize}
+
+
+\subsection{連接表ファイルのフォーマット}
+
+以下は連接表ファイル{\tt connect.cha}中の連接規則の例である．
+{\tt *}は適合する全可能性を示す．
+ファイルの前方にある規則に適合する連接規則は，
+ファイルの後方にある規則によって上書きされる．
+このため，一般的な規則を先に書き，詳細化した規則を後に書く必要がある．
+
+
+\begin{screen}\begin{verbatim}
+(( (((名詞 固有名詞 人名 姓)   )) 
+   (((名詞 接尾 人名)   )) ) 842)
+
+(((((動詞 自立) 五段・ラ行アル 連用形 )) 
+  (((助動詞) 特殊・マス  ))) 604)
+
+(((((助詞 接続助詞) * * て)) 
+  (((助詞 係助詞) * * も)) 
+  (((形容詞 非自立) 形容詞・アウオ段 * よい))) 35)
+\end{verbatim}\end{screen}
+
+
+\begin{itemize}
+\item $\langle$連接規則エントリ$\rangle$ ::= "($\langle$連接情報$\rangle$ $\langle$連接コスト$\rangle$)"
+\item $\langle$連接情報$\rangle$ ::= $\langle$品詞定義$\rangle$ $\langle$品詞定義$\rangle$+
+\item $\langle$品詞定義$\rangle$+ ::= $\langle$品詞定義$\rangle$ $|$ $\langle$品詞定義$\rangle$+
+\item $\langle$品詞定義$\rangle$ ::= "($\langle$品詞情報$\rangle$ $\langle$活用型情報$\rangle$ $\langle$活用形情報$\rangle$ $\langle$語彙化品詞規
+則$\rangle$)" $|$ "($\langle$品詞情報$\rangle$ $\langle$活用型情報$\rangle$ $\langle$活用形情報$\rangle$)" $|$ "($\langle$品詞情報$\rangle$ $\langle$活用型情報
+$\rangle$)" $|$ "($\langle$品詞情報$\rangle$)"
+\item $\langle$品詞情報$\rangle$ ::= "($\langle$品詞名$\rangle$)"
+\item $\langle$活用型情報$\rangle$ ::= "$\langle$活用型$\rangle$" $|$ "*"
+\item $\langle$活用形情報$\rangle$ ::= "$\langle$活用形$\rangle$" $|$ "*"
+\item $\langle$語彙化品詞規則$\rangle$ ::= "$\langle$語彙化品詞定義 $\rangle$" $|$  "*"
+\end{itemize}
+
+\section{chasenrc ファイル}
+\label{s:chasenrc}
+
+chasenrc ファイルは形態素解析プログラムに必要な様々な選択肢を定義する
+ために用いられる．これらの定義は通常，
+{\tt PREFIX/etc/chasenrc} に記述されるが，
+利用者のホームディレクトリの
+`{\tt .chasenrc}' というファイルに記述することもできる．
+起動時オプションなどに
+よって chasenrc ファイルを指定することもできる．
+具体的には次のような優先順位で chasenrc ファイルが読み込まれる．
+
+\begin{enumerate}
+\item 起動時に {\tt -r} オプションで指定されたファイル．
+\item 環境変数 {\tt CHASENRC} で指定されたファイル．
+\item 利用者のホームディレクトリにある {\tt .chasen2rc}．
+\item 利用者のホームディレクトリにある {\tt .chasenrc}．
+\item {\tt PREFIX/etc/chasenrc}
+
+\end{enumerate}
+
+設定項目一覧を以下に示す．
+このうち，「{\tt DADIC}」，「未知語品詞」，「品詞コスト」は必ず指定しなければならない．
+
+\begin{enumerate}
+\item {\bf 文法ファイルのディレクトリ}
+
+文法ファイル({\tt grammar.cha, ctypes.cha, cforms.cha, connect.cha})
+が存在するディレクトリを指定する．
+
+\begin{screen}\begin{verbatim}
+(文法ファイル /usr/local/lib/chasen/ipadic/dic)
+\end{verbatim}\end{screen}
+
+「文法ファイル」は省略することができ，その場合 chasenrc ファイルがある
+ディレクトリと同じディレクトリを指定したとみなされる．
+茶筌に付属の辞書 ipadic1.01 以降のchasenrcファイルでは
+「文法ファイル」は省略されている．
+
+\item {\bf システム辞書}
+
+ダブル配列辞書({\tt chadic.\{da,lex,dat\}})を，
+ファイル名から末尾の拡張子を除いたものを記述することによって指定する．
+複数組みの辞書を指定することもできる．
+また，相対パス，つまり ``/'' で始まらないパスを記述すると，
+文法ファイルと同じディレクトリを指定したとみなされる．
+例えば以下のように指定する．
+
+\begin{screen}\begin{verbatim}
+(DADIC chadic
+        /home/rikyu/mydic/chadic)
+\end{verbatim}\end{screen}
+
+上の記述では，以下の二組の辞書ファイルが読み込まれる．
+
+\begin{enumerate}
+\item 文法ファイルと同じディレクトリにある {\tt chadic.\{da,lex,dat\}}
+\item {\tt /home/rikyu/mydic/} にある {\tt chadic.\{da,lex,dat\}}
+\end{enumerate}
+
+辞書引きに際しては，これらの辞書の両方が用いられる
+\footnote{
+  一組の辞書には同一の形態素の登録は行なわれないが，複数の辞書に同じ形態
+  素が登録されている場合はあり得る．
+  このような場合は，同じ形態素が複数得られることになる．
+  }．
+
+Darts\footnote{\tt http://cl.aist-nara.ac.jp/\%7etaku-ku/software/darts/}によるダブル配列辞書を使うために「{\tt DADIC}」を指定する．
+
+\begin{screen}\begin{verbatim}
+(DADIC chadic)
+\end{verbatim}\end{screen}
+
+上の記述では，文法ファイルと同じディレクトリにある
+{\tt chadic.da}, {\tt chadic.lex}, {\tt chadic.dat} が読み込まれる．
+
+%DADICは他の形式に比べ速く，PATDIC にあった1バイト文字についての制約も
+%ない．
+
+使用する辞書の最大数は，32個に設定されている．
+%これを変更したい場合は， {\tt chasen/chalib.h} の {\tt PAT\_DIC\_NUM}
+%の値を変更してコンパイルしなおせばよい．
+
+\item {\bf 未知語の品詞}
+
+未知語が発見された時に，その語をどのような品詞として連接規則を適用するか
+を指示する．複数の品詞を指定した時は，それぞれの品詞について連接規則が
+適用される．
+
+\begin{screen}\begin{verbatim}
+(未知語品詞 (名詞 サ変接続))              ; 1個の品詞を指定
+(未知語品詞 (名詞 サ変接続) (名詞 一般))  ; 複数の品詞を指定
+\end{verbatim}\end{screen}
+
+\item {\bf 品詞のコスト}
+
+形態素解析プログラムでは，解析結果の優先情報をコストとして計算している．
+解析に曖昧性がある場合は，コストの総計が低いものを優先することになっている．
+「品詞コスト」では，各品詞のコストの倍率と，
+「未知語」についてのコストを定義する．
+コストは正の整数値をとる．
+
+\begin{screen}\begin{verbatim}
+(品詞コスト
+        ((*)                1)
+        ((未知語)           500)
+        ((名詞)             2)
+        ((名詞 固有名詞)    3)
+)
+\end{verbatim}\end{screen}
+
+同じ品詞に対してコストの定義が複数回指定されている場合は，
+後のものが優先される．
+上の記述では，「名詞」の形態素のコストは基本的には 2 倍になるが，
+「{\tt 名詞-固有名詞}」以下に細分類される名詞だけは形態素のコストが
+3 倍になる．
+また，先頭の `{\tt (*)}' の指定により，ここで明示的に定義されていない
+形態素のコストはすべて 1 倍(そのままのコスト値)となる．
+未知語の形態素のコスト値はすべて500になる．
+
+\item {\bf 連接コストと形態素コストの相対的な重みの定義}
+
+形態素解析におけるコストの計算は形態素のコストと連接のコストの総計として
+計算される．
+これら二種類のコストに異なる重みを掛けたい場合には，それを指定することが
+できる．
+解析結果のコストはそれぞれのコストにここで指定された重みを乗じた値の総計
+として計算される．
+省略した場合の重みは 1 である．
+
+\begin{screen}\begin{verbatim}
+(連接コスト重み 1)      ; デフォルト値
+(形態素コスト重み 1)    ; デフォルト値
+\end{verbatim}\end{screen}
+
+\item {\bf コスト幅}
+
+形態素解析の過程において，常にコストが最低の結果を出すのではなく，
+ある程度のコスト幅を許容したい場合がある．
+この許容幅を指定することができる．
+コスト幅におさまるすべての解を出力するには
+{\tt -m} オプションや{\tt -p} オプションを使う．
+
+\begin{screen}\begin{verbatim}
+(コスト幅 0)   ; デフォルト値
+\end{verbatim}\end{screen}
+
+コスト幅は{\tt -w}オプションでも指定することができる．
+その場合，{\tt -w}オプションで指定したものが優先される．
+
+\item {\bf 未定義連接コストの定義}
+
+連接規則ファイルに連接規則が定義されていない形態素間の連接コストを指定する．
+未定義連接コストを設定しないか，あるいは 0 を指定すると，連接規則が定
+義されていない形態素どうしは決して連接しないという意味になる．
+デフォルトは0．
+
+\begin{screen}\begin{verbatim}
+(未定義連接コスト 500)
+\end{verbatim}\end{screen}
+
+\item {\bf 出力フォーマット}
+
+出力フォーマットを指定することにより，解析結果の出力形式を変えることが
+できる．
+
+\begin{screen}\begin{verbatim}
+(出力フォーマット "%m\t%y\t%P-\n")
+\end{verbatim}\end{screen}
+
+出力フォーマットは{\tt -F}オプションでも指定することができる．
+その場合，{\tt -F}オプションで指定したものが優先される．
+詳しくは \ref{format} 節を参照のこと．
+
+\item {\bf BOS文字列}
+
+解析結果の文頭に表示する文字列を指定する．``{\tt \%S}''を使うと
+解析文全体を表示できる．デフォルトは空文字列(何も表示しない)．
+
+\begin{screen}\begin{verbatim}
+(BOS文字列 "解析文: [%S]\n")
+\end{verbatim}\end{screen}
+
+\item {\bf EOS文字列}
+
+解析結果の文末に表示する文字列を指定する．``{\tt \%S}''を使うと
+解析文全体を表示できる．デフォルトは ``\verb+EOS\n+''．
+
+\begin{screen}\begin{verbatim}
+(EOS文字列 "文末\n")
+\end{verbatim}\end{screen}
+
+\item {\bf 空白品詞}
+
+茶筌は，半角の空白文字(ASCIIコード32)とタブ(ASCIIコード9)を空白と
+みなし，これらを無視して解析する．通常は，解析結果に空白の情報を
+出力しないが，「空白品詞」を設定することにより，空白についての情報
+を出力するようになる．
+例えば，以下のように設定すると，空白を「{\tt 記号-空白}」として出力する．
+
+\begin{screen}\begin{verbatim}
+(空白品詞 (記号 空白))
+\end{verbatim}\end{screen}
+
+なお，出力フォーマットを ``\verb+%m+'' に設定して，空白品詞を
+指定する(品詞は何でもよい)と，解析文と全く同じ出力が得られる
+ことになる．
+
+\item {\bf 注釈}
+
+ある文字列で始まりある文字列で終わる文字列を注釈のように
+扱い，その文字列の部分を無視して解析させることができる．
+解析結果には，その文字列が一つの形態素として出力される．
+
+chasenrc ファイルには，開始文字列，終了文字列からなるリストと
+出力時の品詞名あるいはフォーマット文字列を記述する．
+終了文字列は省略することができ，その場合，開始文字列と一致する文字列
+自身を注釈として扱う．また，出力時の品詞名あるいはフォーマット文字列
+を省略するとその形態素についての情報を全く出力しなくなる．
+
+\begin{screen}\begin{verbatim}
+(注釈 (("<" ">") "%m\n")
+      (("「") (記号 一般))
+      (("」") (記号 一般))
+      (("\"" "\"") (名詞 引用文字列))
+      (("［" "］"))
+      )
+\end{verbatim}\end{screen}
+
+例えば，上のように記述すると，以下のように解析，出力される．
+
+\begin{itemize}
+\item {\tt <img src="cha.gif">} のように ``\verb+<+'' で始まり
+``\verb+>+'' で終わる文字列をそのまま出力する．
+\item ``「'' あるいは ``」'' を「{\tt 記号-一般}」として出力する．
+\item ``{\tt "hello(again)"}'' のようにダブルクォーテーションで
+囲まれた文字列を「{\tt 名詞-引用文字列}」として出力する．
+\item ``{\tt ［ちゃせん］}'' のように ``［'' で始まり ``］'' で
+終わる文字列を無視して解析し，解析結果にはその文字列の情報を
+出力しない．
+\end{itemize}
+
+\item {\bf 連結品詞}
+
+ある品詞の形態素が連続して出現したときに，一つの形態素として連結して出
+力させるときに使用する．
+
+\begin{screen}\begin{verbatim}
+(連結品詞 ((複合名詞) (名詞) (接頭詞 名詞接続) (接頭詞 数接続))
+	  ((記号)))
+\end{verbatim}\end{screen}
+
+例えば，上の記述では以下のように品詞を連結する．
+
+\begin{enumerate}
+\item 連続した「名詞」「{\tt 接頭詞-名詞接続}」
+「{\tt 接頭詞-数接続}」を連結し「複合名詞」として表示する．
+なお，「複合名詞」は品詞定義ファイル {\tt grammar.cha} に記述しておく
+必要がある．
+\item 連続した「記号」を連結し，「記号」として表示する．
+\end{enumerate}
+
+\item {\bf 複合語出力}
+
+形態素辞書ファイル({\tt .dic})内で定義した複合語について，
+複合語全体の形態素情報を出力する(``複合語'')か，
+複合語を構成する各単語の形態素情報を出力する(``構成語'')かを
+選択することができる．デフォルトは``複合語''．
+
+\begin{screen}\begin{verbatim}
+(複合語出力 "複合語")
+\end{verbatim}\end{screen}
+
+なお，複合語出力については {\tt -Oc}, {\tt -Os} オプションによっても
+制御することができる．
+
+\item {\bf 区切り文字}
+
+{\tt -j} オプションをつけた時の文の区切り文字を並べ，一つの文字列にし
+たものを指定する(\ref{option}節参照)．区切り文字には全角文字，半角文字
+の両方を使用することができる．例えば
+
+\begin{screen}\begin{verbatim}
+(区切り文字 "。．、，！？.,!? ")
+\end{verbatim}\end{screen}
+
+と定義すると，全角文字の「。．、，！？」のいずれか，または半角文字の
+``\verb+.,!? +'' (空白文字が入っていることに注意)のいずれかの文字が文の
+区切りとなる．
+
+\end{enumerate}
+
+
+\subsection*{出力フォーマット}\label{format}
+
+{\tt -F}オプションや，{\tt chasenrc}ファイルの「出力フォーマット」で
+出力フォーマットを指定することにより，解析結果の出力形式を変えることが
+できる．
+
+出力フォーマットの文字列の末尾に `\verb+\n+' があれば，各形態素情報の
+表示ごとに改行を行い，文末の次に `{\tt EOS}' の1行を出力する．末尾に 
+`\verb+\n+' がなければ，1文中の形態素情報を1行で出力し，行末に改行を
+表示する．
+
+また，出力フォーマットに `{\tt -f}', `{\tt -e}', `{\tt -c}' を
+指定すると，それぞれ {\tt -f}, {\tt -e}, {\tt -c} と同じ出力形式
+になる．
+
+出力フォーマットの使用例をいくつかあげる．
+
+\begin{itemize}
+\item デフォルト({\tt -f} オプション)と同様の出力
+
+\*"%m\t%y\t%M\t%U(%P-)\t%T \t%F \n"* または \*"-f"*
+
+\item 見出し，読み，品詞をタブで区切って表示
+
+\*"%m\t%y\t%P-\n"*
+
+\item 見出し語のみ
+
+\*"%m\n"*
+
+\item 分かち書き(見出し語を空白で区切って表示)
+
+\*"%m "*
+
+\item 漢字かな変換
+
+\*"%y"*
+
+\item ルビつき表示．``漢字(かな)'' の形式で表示する．
+
+\*"%r ()"*
+
+\end{itemize}
+
+出力フォーマットの変換文字の一覧を以下に示す．
+
+\begin{tabular}{l|l} \hline \hline
+変換文字 & 機能 \\ \hline
+\+%m+       & 見出し(出現形)\\
+\+%M+       & 見出し(基本形)\\
+\+%y, %y1+  & 読みの第一候補(出現形)\\
+\+%Y, %Y1+  & 読みの第一候補(基本形)\\
+\+%y0+      & 読み全体(出現形)\\
+\+%Y0+      & 読み全体(基本形)\\
+\+%a+       & 発音の第一候補(出現形)\\
+\+%A+       & 発音の第一候補(基本形)\\
+\+%a0+      & 発音全体(出現形)\\
+\+%A0+      & 発音全体(基本形)\\
+\+%rABC+    & ルビつきの見出し(``\+A漢字BかなC+'' と表示)(※1)\\
+\+%i, %i1+  & 付加情報の第一候補\\
+\+%i0+      & 付加情報全体\\
+\+%Ic+      & 付加情報(空文字列か ``\+NIL+'' なら文字\+c+)(※1)\\
+\+%Pc+      & 各階層の品詞を文字\+c+で区切った文字列\\
+\+%Pnc+     & 1〜\+n+(\+n+:1〜9)階層目までの品詞を文字\+c+で区切った文字列\\
+\+%h+       & 品詞の番号\\
+\+%H+       & 品詞文字列\\
+\+%Hn+      & \+n+(\+n+:1〜9)階層目の品詞(なければ最も深い階層)\\
+\+%b+       & 0(旧版との互換性のみ)\\
+\+%BB+      & 品詞細分類(なければ品詞)\\
+\+%Bc+      & 品詞細分類(なければ文字\+c+)(※1)\\
+\+%t+       & 活用型の番号\\
+\+%Tc+      & 活用型(なければ文字\+c+)(※1)\\
+\+%f+       & 活用形の番号\\
+\+%Fc+      & 活用形(なければ文字\+c+)(※1)\\
+\+%c+       & 形態素のコスト\\
+\+%S+       & 解析文全体\\
+\+%pb+      & 最適パスであれば ``\+*+'', そうでなければ ``\* *''\\
+\+%pi+      & パスの番号\\
+\+%ps+      & パスの形態素の開始位置\\
+\+%pe+      & パスの形態素の終了位置$+1$\\
+\+%pc+      & パスのコスト\\
+\+%ppiC+    & 前に接続するパスの番号を文字\+C+で区切り列挙\\
+\+%ppcC+    & 前に接続するパスのコストを文字\+C+で区切り列挙\\
+\+%?B/STR1/STR2/+ & 品詞細分類があれば\+STR1+，なければ\+STR2+(※2)\\
+\+%?I/STR1/STR2/+ & 付加情報が ``NIL'' でも ``''(空文字列)でもなければ\+STR1+，そうでなければ\+STR2+(※2)\\
+\+%?T/STR1/STR2/+ & 活用があれば\+STR1+，なければ\+STR2+(※2)\\
+\+%?F/STR1/STR2/+ & \+%?T/STR1/STR2/+ と同じ \\
+\+%?U/STR1/STR2/+ & 未知語なら\+STR1\+，そうでなければ\+STR2+(※2)\\
+\+%U/STR/+        & 未知語なら"未知語"，そうでなければ\+STR+(\+%?U/未知語/STR/+と同じ)(※2)\\
+\+%%+       & \+%+ そのもの\\ \hline
+\end{tabular}
+
+\begin{tabular}{l|l} \hline \hline
+変換文字 & 機能 \\ \hline
+\+.+        & フィールド幅の指定\\
+\+-+        & フィールド幅の指定\\
+\+1-9+      & フィールド幅の指定\\
+\+\n+       & 改行文字\\
+\+\t+       & タブ\\
+\+\\+       & \+\+ そのもの\\
+\+\'+       & \+'+ そのもの\\
+\+\"+       & \+"+ そのもの\\ \hline
+\end{tabular}
+
+\begin{description}
+\item[※1]  ipadic では，「行く(いく/ゆく)」のように
+形態素が複数の読みを持つ場合，その読みを「\{イ/ユ\}ク」のように，
+半角のブレースとスラッシュを使って表している．
+通常の読みの出力(出力フォーマットの \+%y+)では，その第一候補である
+「イク」が出力され，\+%y0+ を使うと読み全体である「\{イ/ユ\}ク」
+が出力される．
+
+\item[※1] \+A+,\+B+,\+C+,\+c+ が空白文字の時は何も表示しない．
+\item[※2] `/'には任意の文字が使える．また，括弧``\+(){}[]<>+''を
+用いることもできる．以下に例をあげる．
+
+\begin{itemize}
+\item \+%?T#STR1#STR2#+
+\item \+%?B(STR1)(STR2)+
+\item \+%?U{STR1}/STR2/+
+\item \+%U[STR]+
+\end{itemize}
+
+\end{description}
+
+
+\section{形態素エントリの追加}
+
+\subsection{各ファイルの編集}
+
+{\tt ipadic-X.X.X.tar.gz} もしくは{\tt ipadic-sjis-X.X.X.zip} をダ
+ウンロードし解凍する．
+
+ダウンロードするファイルは以下にある．
+
+\begin{itemize}
+ \item http://chasen.aist-nara.ac.jp/stable/ipadic/
+ \item http://chasen.aist-nara.ac.jp/stable/ipadic/win/
+\end{itemize}
+
+前述したフォーマットにのっとり編集する．
+
+\begin{itemize}
+ \item {\tt *.dic} \\
+       形態素辞書
+ \item {\tt connect.cha}\\
+      連接表
+ \item {\tt grammar.cha} \\
+      品詞定義ファイル
+\item {\tt ctypes.cha} \\
+      活用型定義ファイル 
+\item {\tt cforms.cha} \\
+      活用形定義ファイル
+\end{itemize}
+
+\subsection{システム辞書の再コンパイル(UNIX 版)}
+
+品詞体系の変更など，システムの形態素辞書を編集した場合には，
+辞書の再コンパイルを必要とする．
+
+\begin{enumerate}
+\item  {\tt ./configure} を実行する．
+
+    インストール先を手動で変更したい場合は以下のように実行する．
+
+    \begin{screen}\begin{verbatim}
+    % ./configure --with-dicdir=/home/masayu-a
+    \end{verbatim}\end{screen}
+
+\item  {\tt make} を実行する．
+
+    \begin{screen}\begin{verbatim}
+    % make
+    \end{verbatim}\end{screen}
+
+    OS 標準の make を使うとコンパイルに失敗することがある．
+    その場合は GNU make を使用する．
+
+\item  root 権限で `make install' を実行する．
+
+    \begin{screen}\begin{verbatim}
+    # make install
+    \end{verbatim}\end{screen}
+
+    デフォルトでは {\tt /usr/local/share/chasen/dic/ipadic} に
+    インストールされる(環境によって多少異なることもある)．
+
+    但し，ユーザーのディレクトリにインストールする場合には，
+    root 権限は必要としない．
+\end{enumerate}
+
+\subsection{ユーザー辞書の再コンパイル(UNIX 版)}
+
+品詞体系の変更などを伴わない簡単な語彙の追加の場合には，
+ユーザー辞書を利用することができる．
+
+まずユーザー辞書専用のディレクトリを用意する．
+
+拡張子が {\tt .dic} のファイル名をもつ形態素辞書ファイルを
+追加した後，次のようにコマンドを入力する．
+
+\begin{screen}\begin{verbatim}
+% mkdir ~/mydic
+% cd ~/mydic
+% emacs Noun2.dic
+  (形態素情報を記述)
+$ `chasen-config --mkchadic`/makeda -i e chadic *.dic
+\end{verbatim}\end{screen}
+
+{\tt makeda} に付与される i オプションは文字コードを意味する．
+次の４つの文字コードが指定できる(e:EUC-JP, s:Shift\_JIS, w:UTF-8,
+a:ISO-8859-1)．
+
+\begin{screen}\begin{verbatim}
+% chasen-config --mkchadic
+\end{verbatim}\end{screen}
+
+次に，{\tt chasenrc} ファイルを {\tt .chasenrc} というファイル名で
+ホームディレクトリにコピーする．
+
+\begin{screen}\begin{verbatim}
+% cd
+% cp /usr/local/share/chasen/dic/ipadic/chasenrc .chasenrc
+\end{verbatim}\end{screen}
+
+{\tt .chasenrc} を編集し，
+以下のように「文法ファイル」を指定し，
+「DADIC」にユーザ辞書を追加する．
+
+\begin{screen}\begin{verbatim}
+(文法ファイル /usr/local/share/chasen/dic/ipadic)
+(DADIC chadic
+        /home/masayu-a/mydic/chadic)
+\end{verbatim}\end{screen}
+
+
+\subsection{辞書の再コンパイル(Windows 版)}
+
+展開されたファイルを， Windows 版の茶筌がインストールされているディレク
+トリの中にある {\tt dic} と いうディレクトリの下にコピーする． 
+
+単語を記述し終えたら，コマンドプロンプトで {\tt Makefile.bat} を実行する．
+
+\begin{screen}\begin{verbatim}
+C:\Program Files\chasen21> Makefile.bat
+\end{verbatim}\end{screen}
+
+\def\@listI{\parsep 0pt \topsep 0pt \partopsep 0pt \itemsep 0pt}
+
+
+\section{IPA 品詞体系}
+\subsection*{説明の書式}
+
+\subsubsection*{品詞名}
+
+以後，品詞名のことを「タグ」と呼ぶことがある．それぞれの品詞の説明の際
+に，以下の記号により注釈が付けられている．
+
+\begin{description}
+\item[＃] 品詞の解説
+\item[例：] 単語例
+\item[＊] 品詞の解説についての備考
+\item[＆] 読み，活用形についての備考
+\end{description}
+\vspace*{20pt}
+
+\subsection*{品詞名に関する注意事項}
+
+本日本語辞書は，IPA品詞体系(THiMCO97)に基づいているが，茶筌の辞書とし
+て組み込む際にいくつかの変更を行なった．品詞体系の特徴と変更点について
+以下にまとめる．
+
+\begin{itemize}
+
+\item 品詞は，多段の階層に分類されている．例えば，「名詞\ 固有名詞\ 人名\ 
+姓」は，四段の階層よりなる品詞名である．以下では，これを
+「名詞-固有名詞-人名-姓」のようにハイフンで区切って表示する．茶筌2.0で
+は，任意の段数の品詞階層の定義が可能になったので，これを直接文法ファイ
+ル(grammar.cha)に定義することができる．
+
+\item THiMCO97では，「動詞 一段 連用形 自立」のように，品詞の分類と
+活用型，活用形が混ざり合った形で定義されていた．茶筌では，品詞の分類の
+定義と活用に関する定義が分離されているので，これを「動詞-自立\ 一段\ 
+連用形」のように3つの項目(品詞名，活用型，活用形)に分けて記述すること
+にした．
+
+\item 品詞名の定義に用いられる分類名を以下の基準に従って変更した．
+
+  \begin{enumerate}
+
+  \item 「（助動詞語幹）」「（形容動詞語幹）」のように丸括弧を伴う名称
+  の丸括弧をすべて除去した．
+
+  \item 「動詞 接尾 （助動詞）」「形容詞 接尾 （助動詞）」として定義さ
+  れる「（助動詞）」の部分は冗長であるので，省略し，「動詞-接尾」「形
+  容詞-接尾」とした．
+
+  \item 動詞の分類には「動詞」「動詞 非自立」「動詞 接尾」に大別される
+  が，茶筌の品詞階層の定義では，「動詞」という記述はすべての動詞を表す
+  ので，区別のため，「動詞-自立」「動詞-非自立」「動詞-接尾」のように
+  「自立」という細分類を追加した．
+
+  同様に，活用語以外の単語のための品詞
+  名については，「名詞」「名詞\ 固有名詞」「名詞\ 固有名詞\ 人名」「名詞\
+  固有名詞\ 人名\ 姓」のような分類を，それぞれ，「名詞-一般」「名詞-固
+  有名詞-一般」「名詞-固有名詞-人名-一般」「名詞-固有名詞-人名-姓」の
+  ように，「一般」という細分類を追加して，排他的に品詞の定義を行なった．
+
+  \item 用言の活用形については，「未然ナイ接続」「未然レル接続」「未然
+  ウ接続」「連用タ接続」「連用マス接続」「連用タイ接続」$\cdots$ のよ
+  うに，後続する助動詞類に応じて細かく定義されていたが，個々の活用型に
+  ついては，「未然」「連用」等で異なる語尾形を持つものは少ない．よって，
+  活用形の名称は，「未然形」「連用形」「基本形」「仮定形」「命令」を基
+  本的な活用形とし，例外的な形のものに対してのみ，THiMCO97の活用形名を
+  使用した．なお，茶筌では辞書出現形に対して「基本形」という活用形を与
+  える仕様になっているため，THiMCO97の「見出し形」という活用形名を「基
+  本形」という名前に変更した．
+
+  \item 「未然ウ接続」は，五段活用の動詞については助動詞「う」が接続し，
+  その他の活用型の動詞については「よう」が接続するための活用であると
+  されていた．ここでは，「う」のみを単語(助動詞)として認め，
+  「来よ(う)」「食べよ(う)」のように「よ」までを活用語尾とした．
+
+  \end{enumerate}
+
+\item ipadic2.0 以降の辞書では，単語に新たに「発音」フィールドが追加された．
+これは，「日本語ディクテーション基本ソフトウェアの開発」グループの
+努力により添付されたものである．例えば，係助詞の「は」の読みは「ワ」，
+「常識」の読みは「ジョーシキ」のように長音は「ー」によって示されている．
+また，綴りも品詞も等しいが読みだけが異なる単語，例えば，
+「私 (ワタシ/ワタクシ)」については，\{ワタシ/ワタクシ\} のようにすべて
+の可能な読みを付与し，一つの語として登録した．
+
+\end{itemize}
+
+\subsection{名詞}
+\subsubsection{名詞-一般}
+\begin{description}
+\item[＃] 普通名詞，あるいは，下位分類が未定の名詞．
+\end{description}
+
+\subsubsection{名詞-固有名詞-一般}
+\begin{description}
+\item[＃] 一般的な固有名詞，あるいは，下位分類が未定の固有名詞．
+\end{description}
+
+\subsubsection{名詞-固有名詞-人名-一般}
+\begin{description}
+\item[＃] 姓と名に分けられないもの，外国人名．あるいは，姓・名の
+決定が未定の人名．
+\item[例：] 「お市の方」
+\end{description}
+
+\subsubsection{名詞-固有名詞-人名-姓}
+\begin{description}
+\item[＃] 主に日本人の姓．
+\item[例：] 「山田」… 
+\end{description}
+
+\subsubsection{名詞-固有名詞-人名-名}
+\begin{description}
+\item[＃] 主に日本人の名．
+\item[例：] 「太郎」…
+\end{description}
+
+\subsubsection{名詞-固有名詞-組織}
+\begin{description}
+\item[＃] 組織を表わす名称．
+\item[例：] 「通産省」「ＮＨＫ」…
+\end{description}
+
+\subsubsection{名詞-固有名詞-地域-一般}
+\begin{description}
+\item[＃] 国名以外の地名を表わすもの．
+\item[例：] 「アジア」「バルセロナ」「京都」
+\end{description}
+
+\subsubsection{名詞-固有名詞-地域-国}
+\begin{description}
+\item[＃] 国の名前．
+\item[例：] 「日本」「オーストラリア」…
+\end{description}
+
+\subsubsection{名詞-代名詞-一般}
+\begin{description}
+\item[＃] いわゆる代名詞，不定語．
+\item[例：] 「それ」「ここ」「あいつ」「あなた」「あちこち」「いくつ」「どこか」「なに」「みなさん」「みんな」「わたくし」「われわれ」…
+\end{description}
+
+\subsubsection{名詞-代名詞-縮約}
+\begin{description}
+\item[＃] 代名詞と係助詞「は」の組み合わせで，短縮した形＜口語＞．
+\item[例：] 「ありゃ」「こりゃ」「こりゃあ」「そりゃ」「そりゃあ」
+\end{description}
+
+\subsubsection{名詞-副詞可能}
+\begin{description}
+\item[＃] 曜日，月など時間を表す副詞的な用法を持つ名詞．量や割合
+などを表し副詞的に使うことのできる名詞．
+\item[例：] 「金曜」「一月」「午後」「少量」…
+\item[＊] 元のIPA品詞体系では，「名詞-副詞可能」のうち実際に副詞的に使
+われてるものを「名詞\ 副詞可能\ 副詞的」，副詞的な使用が可能であ
+るが，副詞的に用いられていないものを「名詞\ 副詞可能」とラベル付
+けされることになっているが，ここでは，文内の用法に関係なく副詞的
+に働き得るものをすべて「名詞-副詞可能」と呼ぶ．
+\end{description}
+
+\subsubsection{名詞-サ変接続}
+\begin{description}
+\item[＃] 格要素をとり，後ろに「する」「できる」「なさる」「くだ
+さる」などが後接することができるもの．
+\item[例：] 「インプット」「愛着」「悪化」「悪戦苦闘」「一安心」「下取り」…
+\item[＊] 「オノマトペ（＋スル）」は，[副詞-助詞類接続］とした．
+\item[＊]「名詞-一般」「名詞-サ変接続」の多重の用法があると考えられる時
+	   は、後者を優先して品詞名を付ける．
+\end{description}
+
+\subsubsection{名詞-形容動詞語幹}
+\begin{description}
+\item[＃] いわゆる形容動詞語幹で，「な」の前に現れるもの．
+\item[例：] 「健康」「安易」「駄目」「だめ」…
+\item[＊] 元のIPA品詞体系では「名詞\ （形容動詞語幹）」となって
+いたが，第2階層の「（形容動詞語幹）」の括弧を取り除いた．
+\item[＊]「名詞-一般」「名詞-形容動詞語幹」の多重の用法があると考えられる時
+	   は、後者を優先して品詞名を付ける．ただし、natureの意味の「自
+	   然」と「自然な」の用法で使われる語は、意味が違う(前者の連体用
+	   法は「自然の」)ため、前者を「名詞-一般」、後者を「名詞-形容動
+	   詞語幹」として別に登録した．
+\end{description}
+
+\subsubsection{名詞-ナイ形容詞語幹}
+\begin{description}
+\item[＃] 助動詞の「ない」の直前に現れて形容詞的な働きをする語
+\item[例：] 「申し訳」「仕方」「とんでも」「違い」…
+\item[＊] 元のIPA品詞体系では形容詞とみなされていたが，「申し訳-ない」
+「申し訳-ありません」「申し訳-ございません」のように派生するので，
+語幹として統一的に扱うことにした．ただし，「ナイ形容詞語幹」とし
+て分類された語がすべてこのような用法を持つわけではない．
+\end{description}
+
+\subsubsection{名詞-数}
+\begin{description}
+\item[＃] 漢数字，算用数字，および，「何（回）」「数（％）」「幾（夜）」．
+\item[例：] 「０」「１」「２」「何」「数」「幾」‥
+\end{description}
+
+\subsubsection{名詞-非自立-一般}
+\begin{description}
+\item[＃] 連体詞，「の（格助詞）」，活用語の基本形に
+接続して使われるもののうち，以下の下位分類にあてはまらないもの．いわゆ
+る形式名詞を含む．
+\item[＊] 普通名詞としての用法であれば，連体修飾を受けていても
+［非自立］ではない． 
+\item[例：] 「あかつき」「暁」「かい」「甲斐」「気」「き
+らい」「嫌い」「くせ」「癖」「こと」「事」「ごと」「毎」「しだい」
+「次第」「順」「せい」「所為」「ついで」「序で」「つもり」「積も
+り」「点」「どころ」「の」「はず」「筈」「はずみ」「弾み」「拍子」
+「ふう」「ふり」「振り」「ほう」「方」「旨」「もの」「物」「者」
+「ゆえ」「故」「ゆえん」「所以」「わけ」「訳」「わり」「割り」
+「割」「ん＜口語＞」「もん＜口語＞」…
+\end{description} 
+
+\subsubsection{名詞-非自立-副詞可能}
+\begin{description}
+\item[＃] 連体詞，「の（格助詞）」，活用語の基本形に接続して使われるも
+ののうち，副詞的に働くことが可能なもの．
+\item[＊] 文脈上で，実際に副詞的に働いている場合には，IPA品詞体
+系ではうしろに［副詞的］を付加することになっているが，それは省略
+した．
+\item[例：] 「あいだ」「間」「あげく」「挙げ句」「あと」「後」
+「余り」「以外」「以降」「以後」「以上」「以前」「一方」「うえ」
+「上」「うち」「内」「おり」「折り」「かぎり」「限り」「きり」「っ
+きり」「結果」「ころ」「頃」「さい」「際」「最中」「さなか」「最
+中」「じたい」「自体」「たび」「度」「ため」「為」「つど」「都度」
+「とおり」「通り」「とき」「時」「ところ」「所」「とたん」「途端」
+「なか」「中」「のち」「後」「ばあい」「場合」「日」「ぶん」「分」
+「ほか」「他」「まえ」「前」「まま」「儘」「侭」「みぎり」「矢先」…
+\end{description}
+
+\subsubsection{名詞-非自立-助動詞語幹}
+\begin{description}
+\item[＃] 連体詞，「の（格助詞）」，活用語の基本形に接続して使われるも
+ののうち，学校文法で助動詞とされる「ようだ」の語幹部分．
+\item[例：] 「よう」「やう」「様(よう)」
+\item[＊] 元のIPA体系では，「名詞-非自立-（助動詞語幹）」と書
+かれていた．
+\end{description}
+
+\subsubsection{名詞-非自立-形容動詞語幹}
+\begin{description}
+\item[＃] 連体詞，「の（格助詞）」，活用語の基本形に接続して使われるも
+ののうち，「な（助動詞「だ」）の体言接続」と接続可能なもの．
+\item[例：] 「みたい」「ふう」
+\item[＊] 元のIPA体系では，「名詞\ 非自立\ （形容動詞語幹）」と書
+かれていた．
+\end{description}
+
+\subsubsection{名詞-特殊-助動詞語幹}
+\begin{description}
+\item[＃] 基本形に接続するもので，学校文法で助動詞と
+されている「そうだ（伝聞）」の語幹部分．
+\item[例：] 「そう」
+\item[＊] 元のIPA体系では，「名詞\ 特殊\ （助動詞語幹）」と書
+かれていた．
+\end{description}
+
+\subsubsection{名詞-接尾-一般}
+\begin{description}
+\item[＃] 名詞，あるいは他の品詞の語幹［ガル接続］や［連用タイ接
+続］に接続して複合名詞を形成する語のうち，下位の分類にあてはまら
+ないもの．一般に「接尾語」というよりも範囲が広く，複合名詞の後ろ
+要素として用いられることが普通なもの．
+\item[例：] 「おき」「かた」「方」「甲斐（がい）」「がかり」「ぎ
+み」「気味」「ぐるみ」「（〜した）さ」「次第」「済（ず）み」「よ
+う」「（でき）っこ」「感」「観」「性」「学」「類」「面」
+「用」…
+\end{description}
+
+\subsubsection{名詞-接尾-人名}
+\begin{description}
+\item[＃] 名詞のうち特に人名に接続して名詞を形成する接尾語．
+\item[例：] 「君」「様」「著」など．
+\end{description}
+
+\subsubsection{名詞-接尾-地域}
+\begin{description}
+\item[＃] 名詞のうち特に地域名に接続して名詞を形成する接尾語．
+\item[例：] 「町」「市」「県」など．
+\end{description}
+
+\subsubsection{名詞-接尾-サ変接続}
+\begin{description}
+\item[＃] 名詞に接続して名詞を形成する接尾語のうち「スル」に前接
+し得るもの．
+\item[例：] 「化」「視」「分け」「入り」「落ち」「買い」
+\end{description}
+
+\subsubsection{名詞-接尾-助動詞語幹}
+\begin{description}
+\item[＃] 他の品詞の連用形に接続し，学校文法で助動詞の語幹とされ
+ている「そうだ（様態）」の語幹部分．
+\item[例：] 「そう」
+\item[＊] 元のIPA体系では，「名詞  接尾  （助動詞語幹）」と書
+かれていた．
+\end{description}
+
+\subsubsection{名詞-接尾-形容動詞語幹}
+\begin{description}
+\item[＃] 他の名詞や活用語の連用形に接続する接尾語で，「だ」（［助動詞 
+特殊・ダ］）に前接するもの．
+\item[例：] 「的」「げ」「がち」
+\item[＊] 元のIPA体系では，「名詞  接尾  （形容動詞語幹）」と書
+かれていた．
+\end{description}
+
+\subsubsection{名詞-接尾-副詞可能}
+\begin{description}
+\item[＃] 他の名詞に接続する接尾語で，副詞的に働くことが可能なもの．
+\item[＊] IPA品詞体系では，文脈上，実際に副詞的に働いているもの
+は，うしろに［副詞的］と付加してあるが，ここでは具体的な用法にか
+かわらず，副詞的な使用が可能なものをすべてこの分類とした．
+\item[例：] 「後（ご）」「以後」「以降」「以前」「前後」「中」「末」
+「上」「時（じ））」
+\end{description}
+
+\subsubsection{名詞-接尾-助数詞}
+\begin{description}
+\item[＃] 数に接続して名詞を形成する接尾．一般の「助数詞」よりも
+範囲が広く，数に接続する普通名詞も含まれる．
+\item[例：] 「個」「つ」「本」「冊」「パーセント」「ｃｍ」「ｋｇ」「カ
+月」「か国」「区画」「時間」「時半」…
+\item[＊] IPA品詞体系では，これらのうち副詞的に用いられているも
+のに「名詞  接尾  助数詞  副詞的」というタグを与えているが，これ
+は用法に関するタグであるため，本体系では含めなかった．
+\end{description}
+
+\subsubsection{名詞-接尾-特殊}
+\begin{description}
+\item[＃] 主に用言につく特殊な接尾辞として新たに定義した．
+\item[例：] 「(楽し)さ」「(考え)方」
+\item[＊] IPA品詞体系では，「名詞  接尾」に分類されていた．
+\end{description}
+
+\subsubsection{名詞-接続詞的}
+\begin{description}
+\item[＃] 単語と単語を接続する接続詞的な働きをするもの．
+\item[例：] 「（日本）対（アメリカ）」「対（アメリカ）」「（３）対（５）」「（女優）兼 （主婦）」
+\end{description}
+
+\subsubsection{名詞-動詞非自立的}
+\begin{description}
+\item[＃] ［助詞-接続助詞］の「て」に接続するもので，意味的には動詞的なもの．
+\item[例：] 「ごらん」「ご覧」「御覧」「頂戴」
+\end{description}
+
+\begin{description}
+\item[注] IPA品詞体系には，単語への分割が不可能なもの，および，
+ことわざ，漢詩，方言，英語などを表すタグとして「名詞  引用文字列」
+が用意されている．また，数式を表すためのタグ「名詞  数式」が用意
+されている．これらは品詞タグとは考えにくいため，本体系では正式な
+品詞名としては採用しない立場を取るが，現在は，「名詞  引用文字列」
+として「いわく」だけが残されている．
+\end{description}
+
+
+\subsection{接頭詞}
+
+\subsubsection{接頭詞-名詞接続}
+\begin{description}
+\item[＃] 名詞（形容動詞語幹を含む）に前接する接頭語のうち，数に
+接続するもの以外．
+\item[例：] 「お（水）」「某（氏）」「同（社）」「故（〜氏）「高（品質）」「お（見事）」「ご（立派）」
+\end{description}
+
+\subsubsection{接頭詞-数接続}
+\begin{description}
+\item[＃] 名詞に前接する接頭語のうち，数に接続するもの．
+\item[例：] 「約」「およそ」「毎時」など
+\end{description}
+
+\subsubsection{接頭詞-動詞接続}
+\begin{description}
+\item[＃] 動詞の命令形あるいは［動詞 連用形］＋「なる／な
+さる／くださる」に前接する接頭語．
+\item[例：] 「お（読みなさい）」「お（座り）」
+\end{description}
+
+\subsubsection{接頭詞-形容詞接続}
+\begin{description}
+\item[＃] 形容詞に前接する接頭語．
+\item[例：] 「お（寒いですねえ）」「バカ（でかい）」
+\end{description}
+
+
+\subsection{動詞}
+
+\subsubsection*{活用形に関する注意}
+
+\begin{description}
+
+\item[未然形] THiMCO97では以下のように細かく分類されているが，語尾形に
+変化のない限り，「未然形」に統一した．
+
+  \begin{itemize}
+  \item 未然レル接続
+    \begin{description}
+    \item[＃] −（ラ）レル，−（サ）セルに接続するもの．
+    \item[例：] 「読ま」「さ」…
+    \end{description}
+  \item 未然ナイ接続
+    \begin{description}
+    \item[＃] −ナイに接続するもの．
+    \item[例：] 「読ま」「し」…
+    \end{description}
+  \item 未然ヌ接続
+    \begin{description}
+    \item[＃] −ヌ，−（サ）シメルに接続するもの．
+    \item[例：] 「読ま」「せ」「来」…
+    \end{description}
+  \item 未然ウ接続
+    \begin{description}
+    \item[＃] −（ヨ）ウに接続するもの．
+    \item[例：] 「読も」「し」…
+    \item[＆] ipadic1.0以降では，助動詞ウが接続するものと定義した．
+	例えば，「する」については，「しよ」が未然ウ接続．
+    \end{description}
+  \end{itemize}
+
+\item[連用形] 例外的な語尾以外はすべて「連用形」という名称に統一した．
+
+  \begin{itemize}
+  \item 連用マス接続
+    \begin{description}
+    \item[＃] −マスに接続するもの．
+    \item[例：] 「読み」「し」「なさい」…
+    \end{description}
+  \item 連用タイ接続
+    \begin{description}
+    \item[＃] −タイ，−ソウ，−ヅライ，−方（かた），読点などに接続するもの．
+    \item[例：] 「読み」「し」「なさり」「向かひ」「習ひ」…
+    \end{description}
+  \item 連用タ接続
+    \begin{description}
+    \item[＃] −タ，−テに接続するもの．
+    \item[例：] 「読ん」「書い」「行っ」「問う」…
+    \end{description}
+  \end{itemize}
+
+\item[基本形] THiMCO97では，「見出し形」と呼ばれているもの．
+    \begin{description}
+    \item[＃] 句点，体言，−マイなどに接続するもの．
+    \item[例：] 「読む」「なさる」「問う」…
+    \end{description}
+
+\item[仮定形] THiMCO97では，「仮定バ接続」と呼ばれている．
+    \begin{description}
+    \item[＃] −バ，−ドモに接続するもの．
+    \item[例：] 「読め」「すれ」…
+    \end{description}
+
+\item[命令ｉ]
+    \begin{description}
+    \item[＃] カ変・五段ラ行特殊の命令形．およびサ変・スルの命令形
+    「せよ」の口語形．
+    \item[例：] 「来い」「なさい」「せい」…
+    \end{description}
+
+\item[命令ｅ]
+    \begin{description}
+    \item[＃] 五段の命令形，文語巳然形，一段動詞の語幹止め命令用法
+    （「くれ」のみ）．
+    \item[例：] 「読め」「（とは）いえ」「（程度の差こそ）あれ」
+    「（やめて）くれ」…
+    \item[＊] 「（やめて）くれ」は「（やめて）くれろ」の「ろ」が落ち
+    た形．「くれる」は一段動詞の中の特殊活用型とすべきものである．な
+    お，「（やめて）（お）くれ（なさい）」の「くれ」は［動詞-非自立\ 一段\
+    連用タイ接続］であり，別のものであり，この口語形は「おく
+    んなさい」となる．
+    \end{description}
+
+\item[命令ｙｏ]
+    \begin{description}
+    \item[＃] 一段・サ変・文語（カ変）の命令形で「ｙｏ」で終わるもの．
+    \item[例：] 「せよ」「みよ」「来よ」…
+    \end{description}
+
+\item[命令ｒｏ]
+    \begin{description}
+    \item[＃] 一段・サ変の命令形で「ｒｏ」で終わるもの．
+    \item[例：] 「しろ」「みろ」…
+    \end{description}
+
+\item[ベキ接続]
+    \begin{description}
+    \item[＃] 「ベキ」につづく形，サ変の場合のみ．
+    \item[例：] 「す」…
+    \end{description}
+
+\item[仮定縮約１]
+    \begin{description}
+    \item[＃] 仮定バ接続と「バ」とが合わさって短縮した形＜口語＞．
+    \item[例：] 「分かれりゃ」
+    \end{description}
+
+\item[体言接続]
+    \begin{description}
+    \item[＃] 文語の場合のみ．見出し形と異なる形があるもの．
+    \item[例：] 「助くる」（cf.「助く」）
+    \end{description}
+
+\item[体言接続特殊]
+    \begin{description}
+    \item[＃] 「る」で終る動詞が「の」などに接続する場合に音便化した形
+    ＜口語＞．
+    \item[例：] 「（何）すん（の？）」
+    \end{description}
+
+\item[体言接続特殊２]
+    \begin{description}
+    \item[＃] 「来る」「する」「とる」などの「体言接続特殊」の語末の
+    「ん」が欠落したもの．
+    ＜口語＞．
+    \end{description}
+\end{description}
+
+\subsection*{動詞の活用型一覧(現代語)}
+
+\noindent ＃＃【活用形】の位置には次のものが入る．（【】の記号はない） \vskip 20pt
+
+\subsubsection{動詞-自立\ カ変\  【活用形】}
+\begin{description}
+\item[例：] 「くる」「来る」「やってくる」「やって来る」
+\end{description}
+
+\subsubsection{動詞-非自立\ カ変\  【活用形】}
+\begin{description}
+\item[例：] 「（て）くる」「（て）来る」
+\end{description}
+
+\subsubsection{動詞-自立\ サ変・スル\  【活用形】}
+\begin{description}
+\item[＃] 「する」，および，［名詞 サ変接続］に接続する「する」．
+\item[例：] 「する」
+\end{description}
+
+\subsubsection{動詞-自立\ サ変・−スル\   【活用形】}
+\begin{description}
+\item[＃] 和語系のサ変動詞．
+\item[例：] 「接する」…
+\item[＊] 「−し＋ない」「−せ＋られる」「−せ＋ぬ」「−し＋よう」「−
+する」「−すれ＋ば」「−せよ」「−しろ」の形だけを［動詞 サ変・スル］
+とした．「−し＋，」「−し＋た」「−し＋たい」などの連用形はすべて［動
+詞 五段・サ行］とした．
+\end{description}
+
+\subsubsection{動詞-自立\ サ変・−ズル\  【活用形】}
+\begin{description}
+\item[＃] 和語系のザ変動詞．
+\item[例：] 「信ずる」…
+\item[＊] 「−ぜ＋られる」「−ぜ＋ぬ」「−ずる」「−ずれ＋ば」「−ぜよ」「−ず＋べし」の形だけを［動詞  サ変・−ズル］とした．「−じ＋ない」「−じ＋よう」の未然形および「−じ＋，」「−じ＋た」「−じ＋たい」などの連用形，および「−じろ」の命令形は［動詞 一段］とした．
+\end{description}
+
+\subsubsection{動詞-自立\ 一段\  【活用形】}
+\begin{description}
+\item[＃] いわゆる上一段活用および下一段活用．
+\item[例：] 「着る」
+\item[＊] 「病める」は，［基本形］のみ．
+\end{description}
+
+\subsubsection{動詞-非自立\ \ 一段  【活用形】}
+\begin{description}
+\item[例：] 「あげる」「うる」「える」「得る」「おえる」「終える」
+「おおせる」「かねる」「兼ねる」「かける」「きれる」「切れる」
+「すぎる」「過ぎる」「そこねる」「損ねる」「そびれる」「そめる」
+「初める」「つける」「つづける」「続ける」「（お読み）できる」
+「（お読み）出来る」「はじめる」「始める」「（て）いる」「（〜し
+ては）いけ（ない）」「（て）くれる」「（て）差し上げる」「（て）
+のける」「（て）みる」「（て）みせる」［（て）もらえる」「（て）
+る＜口語＞」
+\item[＊] 「（〜しては）いけ（ない）」の基本形は「いける」．
+\item[＊] 「（勉強）できる」は［非自立］としない．
+\item[＊] 「うる」は，「うる」（［基本形］）と「うれ」（［仮定形］）の
+み．「う」は［動詞  文語  基本形］とする．
+\end{description}
+
+\subsubsection{動詞-接尾\ 一段\  【活用形】}
+\begin{description}
+\item[＃] 学校文法では助動詞と呼ばれているもの．
+\item[例：] 「させる」「せる」「しめる」「しむる」「られる」「れる」
+\end{description}
+
+\subsubsection{動詞-自立\ 五段・カ行イ音便\  【活用形】}
+\begin{description}
+\item[＃] 五段カ行で，［助詞  接続助詞］の「て」に接続するときにイ音便
+になるもの．
+\item[例：] 「解く」「聞く」…
+\end{description}
+
+\subsubsection{動詞-非自立\ 五段・カ行イ音便\  【活用形】}
+\begin{description}
+\item[例：] 「つづく」「続く」「ぬく」「抜く」「（て）いただく」「（て）頂く」「（て）おく」「とく＜口語＞」「どく＜口語＞」
+\end{description}
+
+\subsubsection{動詞-非自立\ 五段・カ行促音便\  【活用形】}
+\begin{description}
+\item[＃] 五段カ行で，［助詞  接続助詞］の「て」に接続するときに促音便になるもの．
+\item[例：] 「いく」「行く」「ゆく」
+\item[＊] 「ゆく」には，「ゆっ（て）」の形はないが，このタグを振る．「ゆき（て）」は［動詞  文語  連用タ接続］とする．
+\end{description}
+
+\subsubsection{動詞-非自立\ 五段・カ行促音便\  【活用形】}
+\begin{description}
+\item[例：] 「いく」「行く」「ゆく」「く＜口語＞」
+\item[＊] 「ゆく」には，「ゆっ（て）」の形はないが，このタグを振る．「ゆき（て）」は［動詞  文語  連用タ接続］とする．
+\end{description}
+
+\subsubsection{動詞-自立\ 五段・ガ行\   【活用形】}
+\begin{description}
+\item[＃] 五段ガ行で，［助詞  接続助詞］の「て」に接続するときにイ音便になるもの．
+\item[例：] 「継ぐ」「急ぐ」…
+\end{description}
+
+\subsubsection{動詞-自立\ 五段・サ行\   【活用形】}
+\begin{description}
+\item[＃] 五段サ行で，［助詞  接続助詞］の「て」に接続するときに音便化しないもの．
+\item[例：] 「話す」…
+\end{description}
+
+\subsubsection{動詞-非自立\ 五段・サ行\   【活用形】}
+\begin{description}
+\item[例：] 「いたす」「致す」「だす」「出す」「つくす」「尽くす」「直す」
+\end{description}
+
+\subsubsection{動詞-自立\ 五段・タ行\   【活用形】}
+\begin{description}
+\item[＃] 五段タ行で，［助詞  接続助詞］の「て」に接続するときに促音便になるもの．
+\item[例：] 「持つ」…
+\end{description}
+
+\subsubsection{動詞-自立\ 五段・ナ行\   【活用形】}
+\begin{description}
+\item[＃] 五段ナ行で，［助詞  接続助詞］の「て」に接続するときにハツ音便になるもの．
+\item[例：] 「死ぬ」
+\end{description}
+
+\subsubsection{動詞-自立\ 五段・バ行\   【活用形】}
+\begin{description}
+\item[＃] 五段バ行で，［助詞  接続助詞］の「て」に接続するときにハツ音便になるもの．
+\item[例：] 「呼ぶ」…
+\end{description}
+
+\subsubsection{動詞-自立\ 五段・マ行\   【活用形】}
+\begin{description}
+\item[＃] 五段マ行で，［助詞  接続助詞］の「て」に接続するときにハツ音便になるもの．
+\item[例：] 「進む」…
+\end{description}
+
+\subsubsection{動詞-非自立\ 五段・マ行\  【活用形】}
+\begin{description}
+\item[例：] 「こむ」「込む」
+\end{description}
+
+\subsubsection{動詞-自立\ 五段・ラ行\  【活用形】}
+\begin{description}
+\item[＃] 五段ラ行で，［助詞  接続助詞］の「て」に接続するときに促音便になるもの．
+\item[例：] 「切る」「なる」…
+\end{description}
+
+\subsubsection{動詞-非自立\ 五段・ラ行\   【活用形】}
+\begin{description}
+\item[例：] 「おわる」「終る」「終わる」「かかる」「きる」「切る」
+「しぶる」「渋る」「まいる」「まわる」「回る」「やがる」「（せね
+ば／しては）なら（ない）」「（て）ある」「（て）おる」「（て）ま
+わる」「（て）回る」「（て）やる」「ちゃる＜口語＞」「じゃる＜口
+語＞」「ぢゃる＜口語＞」
+\item[＊] 「なら（ない）」の基本形は「なる」
+\end{description}
+
+\subsubsection{動詞-接尾\ 五段・ラ行\   【活用形】}
+\begin{description}
+\item[例：] 「がる」
+\end{description}
+
+\subsubsection{動詞-自立\ 五段・ラ行特殊\   【活用形】}
+\begin{description}
+\item[＃] 五段ラ行で，助動詞「ます」に接続する形および命令形が「−い」の形になるもの．
+\item[例：] 「いらっしゃる」「おっしゃる」「仰言る」「くださる」「下さ
+る」「なさる」「ござる」
+\end{description}
+
+\subsubsection{動詞-非自立\ 五段・ラ行特殊\   【活用形】}
+\begin{description}
+\item[例：] 「（お読み）なさる」「（お読み）くださる」「（お読み）下さる」「（て）くださる」「（て）下さる」「（て）いらっしゃる」「（て）らっしゃる＜口語＞」
+\end{description}
+
+\subsubsection{動詞-自立\ 五段・ワ行ウ音便\  【活用形】}
+\begin{description}
+\item[＃] 五段ワ行で，［助詞  接続助詞］の「て」に接続するときにウ音便になるもの．
+\item[例：] 「問う」「乞う」「沿う（て）」「ゆう（て）」「食う（て）」「すう（て）」「負う（て）」
+\item[＊] ［動詞  五段・ワ行促音便］の動詞については，「て」に接続する活用語尾が「う」になっている場合のみ，このタグを振り，それ以外は，［動詞 五段・ワ行促音便］を振る．（人手修正データ中に現れたものは「ゆう」「食う」「すう」「負う」）
+\end{description}
+
+\subsubsection{動詞-非自立\ 五段・ワ行ウ音便\  【活用形】}
+\begin{description}
+\item[例：] 「たまう」「給う」 
+\end{description}
+
+\subsubsection{動詞-自立\ 五段・ワ行促音便\  【活用形】}
+\begin{description}
+\item[＃] 五段ワ行で，［助詞  接続助詞］の「て」に接続するときに促音便になるもの．
+\item[例：] 「言う」「ゆう」「「食う」「負う」「憂う」‥
+\item[＊] 「憂う」には「憂って」はないが，このタグを振る．（人手修正データ中に現れたものは「憂い（，）」の形のみ）
+\item[＊] ［動詞  五段・ワ行促音便］の動詞については，「て」に接続する活用語尾が「う」になっている場合のみ，［動詞 五段・ワ行ウ音便］を振る．
+\end{description}
+
+\subsubsection{動詞-非自立\ 五段・ワ行促音便\  【活用形】}
+\begin{description}
+\item[例：] 「あう」「合う」「そこなう」「損なう」「（て）しまう」「（て）もらう」「じゃう＜口語＞」「じまう＜口語＞」「ちまう＜口語＞」「ちゃう＜口語＞」
+\end{description}
+
+\subsection*{動詞の活用型一覧(文語)}
+
+IPA品詞体系では，文語の活用型の細分類は行われていない．IPADIC2.4以降で
+は，四段，上二，下二などの各活用型を定義したが，辞書中の実例はまだ充実してい
+ない．活用体系が文語残存のものと，口語ではあるが歴史仮名
+づかいで示されているものとを含む．
+
+\subsubsection{動詞-自立\ 四段・ハ行\   【活用形】}
+\begin{description}
+\item[例：] 「いふ」「云ふ」「向かふ」「習ふ」「思ふ」「能ふ」など．
+\item[＊] 四段にはその他，「カ行」「ガ行」「サ行」「タ行」「バ行」「マ
+行」「ラ行」が定義されている．
+\end{description}
+
+\subsubsection{動詞-自立\ ラ変\   【活用形】}
+\begin{description}
+\item[例：] 「あり」「なり」「しかり」
+\end{description}
+
+\subsubsection{動詞-自立\ 上二・ハ行\   【活用形】}
+\begin{description}
+\item[＊] その他，「ダ行」がある．
+\end{description}
+
+\subsubsection{動詞-自立\ 下二・ア行\   【活用形】}
+\begin{description}
+\item[＊] その他，「カ行」「ガ行」「サ行」「ザ行」「タ行」「ダ行」「ナ
+行」「ハ行」「バ行」「マ行」「ヤ行」「ラ行」「ワ行」「得」がある．
+\end{description}
+
+\subsubsection{動詞-自立\ 一段・得ル\   【活用形】}
+\begin{description}
+\item[＃] 古語「得る」の活用型．基本形と仮定形のみ．
+\end{description}
+
+\subsection{形容詞}
+
+「見出し形」「仮定バ接続」「文語見出し形」をそれぞれ「基本形」「仮定形」
+「文語基本形」と呼ぶ以外は，ほぼTHiMCO97で用いられている活用形名を用い
+た．なお，形容詞の活用型を「形容詞・アウオ段」「形容詞・イ段」「形容詞・
+文語」に分類した．
+
+\noindent {\large 未然ヌ接続}
+\begin{description}
+\item[＃] −ヌに接続するもの．
+\item[例：] 「寒から」… 
+\end{description}
+\vspace{20pt}\noindent {\large 未然ウ接続}
+\begin{description}
+\item[＃] −ウに接続するもの．
+\item[例：] 「寒かろ」… 
+\end{description}
+\vspace{20pt}\noindent {\large 連用タ接続}
+\begin{description}
+\item[＃] −タに接続するもの．
+\item[例：] 「寒かっ」…  
+\end{description}
+\vspace{20pt}\noindent {\large 連用テ接続}
+\begin{description}
+\item[＃] −テ，−ナイ，−ナル，−スル，読点に接続するもの．
+\item[例：] 「寒く」…
+\end{description}
+\vspace{20pt}\noindent {\large 連用ゴザイ接続}
+\begin{description}
+\item[＃] −ゴザイマスに接続するもの．
+\item[例：] 「寒う」「大きゅう」「のう」…
+\end{description}
+\vspace{20pt}\noindent {\large 基本形}
+\begin{description}
+\item[＃] 句点，体言などに接続するもの．
+\item[例：] 「寒い」「大きい」「ない」…
+\end{description}
+\vspace{20pt}\noindent {\large 体言接続}
+\begin{description}
+\item[＃] 文語活用で体言に接続するもの．
+\item[例：] 「寒き」「なき」…
+\item[＆] 基本形には「−イ」の形を入れた．
+\end{description}
+\vspace{20pt}\noindent {\large 仮定形}
+\begin{description}
+\item[＃] −バに接続するもの．
+\item[例：] 「寒けれ」「なけれ」…
+\item[＆] THiMCO97では「仮定バ接続」と呼ばれていた．
+\end{description}
+\vspace{20pt}\noindent {\large 命令}
+\begin{description}
+\item[＃] 文語活用で命令形のもの．
+\item[例：] 「よかれ」「美しかれ」…  
+\item[＆] 終止形には「−イ」の形を入れた．
+\end{description}
+\vspace{20pt}\noindent {\large 文語基本形}
+\begin{description}
+\item[＃] −シで終わるもの．
+\item[例：] 「良し」「遠し」「やむなし」…
+\end{description}
+\vspace{20pt}\noindent {\large 仮定縮約１}
+\begin{description}
+\item[＃] 仮定バ接続と「バ」とが合わさって短縮した形１＜口語＞．
+\item[例：] 「欲しけりゃ」「（それが）なけりゃ（困る）」
+\end{description}
+\vspace{20pt}\noindent {\large 仮定縮約２}
+\begin{description}
+\item[＃] 仮定バ接続と「バ」とが合わさって短縮した形２＜口語＞．
+\item[例：] 「（それが）なきゃ（困る）」
+\end{description}
+\vspace{20pt}\noindent {\large ガル接続}
+\begin{description}
+\item[＃] −ガル，−ゲ，−ソウに接続するもの．
+\item[例：] 「寒」「悲し」…
+\end{description}
+
+\noindent ＃＃【活用形】の位置には次のものが入る．（【】の記号はない）
+\vspace{20pt}
+
+\subsubsection{形容詞-自立\ 形容詞・アウオ段\  【活用形】}
+\begin{description}
+\item[＃] 形容詞の活用型のうち，語幹の最後の母音がアウオのいずれ
+かで終わるもの．
+\item[例：] 「青い」「赤い」「厚い」「暑い」「熱い」…
+\item[＊] IPA品詞体系では，「ない」の文語見出し形「なし」を形容
+詞の文語型活用の見出し形として定義しているが，本体系では，「形容
+詞・アウオ段(あるいは，形容詞・イ段)」型の「文語基本形」という
+活用形として定義している．同様に，IPA体系で形容詞の文語型活用の
+体言接続と定義されている「悪しき」などは，本体系では他の形容詞と同様に
+「体言接続」として定義した．
+\end{description}
+
+\subsubsection{形容詞-自立\ 形容詞・イ段\  【活用形】}
+\begin{description}
+\item[＃] 形容詞の活用型のうち，語幹の最後の母音がイで終わるもの．
+\item[例：] 「哀しい」「楽しい」「頼もしい」…
+\end{description}
+
+\subsubsection{形容詞-自立\ 形容詞・イイ\  【活用形】}
+\begin{description}
+\item[例：] 「いい」「ええ」…
+\end{description}
+
+\subsubsection{形容詞-自立\ 形容詞・不変化型\  【活用形】}
+\begin{description}
+\item[＃] 形容詞の中で「基本形」の用法しかもたないもの．
+\item[例：] 「かっこいい」
+\end{description}
+
+\subsubsection{形容詞-非自立\ 形容詞・アウオ段\ 【活用形】}
+\begin{description}
+\item[＃] 動詞の［連用タイ接続］あるいは［連用タ接続］に後接する形容詞．
+\item[例：] 「がたい」「難い」「づらい」「にくい」「やすい」「（て）よい」「（て）良い」
+\end{description}
+
+\subsubsection{形容詞-非自立\ 形容詞・イ段\ 【活用形】}
+\begin{description}
+\item[＃] 動詞の［連用タイ接続］あるいは［連用タ接続］に後接する形容詞．
+\item[例：] 「らしい」「（て）ほしい」「（て）欲しい」
+\end{description}
+
+\subsubsection{形容詞-非自立\ 形容詞・イイ\  【活用形】}
+\begin{description}
+\item[例：] 「いい」
+\end{description}
+
+\subsubsection{形容詞-非自立\ 形容詞・不変化型\  【活用形】}
+\begin{description}
+\item[＃] 動詞の［連用タイ接続］あるいは［連用タ接続］に後接する形容詞
+で「基本形」の用法しかもたないもの．
+\end{description}
+
+\subsubsection{形容詞-接尾\ 形容詞・アウオ段\  【活用形】}
+\begin{description}
+\item[＃] 学校文法では助動詞とされるもの．
+\item[例：] 「(食べ)たい」
+\end{description}
+
+\subsubsection{形容詞-接尾\ 形容詞・イ段\  【活用形】}
+\begin{description}
+\item[＃] 学校文法では助動詞とされるもの．
+\item[例：] 「(嫌味)たらしい」
+\end{description}
+
+\subsection{副詞}
+\subsubsection{副詞-一般}
+\begin{description}
+\item[＃] 必ず後ろで切れるもの，連体修飾が不可能なもの．
+\item[例：] 「あいかわらず」「多分」など．
+\end{description}
+
+\subsubsection{副詞-助詞類接続}
+\begin{description}
+\item[＃] 「の」「は」「に」「な」「する」「だ」などが後続するこ
+とが可能な副詞．
+\item[例：] 「こんなに」「そんなに」「あんなに」「なにか」「なんでも」
+\end{description}
+
+\subsection{連体詞}
+\subsubsection{連体詞}
+\begin{description}
+\item[＃] 名詞を修飾する形しかもたないもの．
+\item[例：]  「この」「その」「あの」「どの」「いわゆる」「なん
+らかの」「何らかの」「いろんな」「こういう」「そういう」「ああい
+う」「どういう」「こんな」「そんな」「あんな」「どんな」「大きな」
+「小さな」「おかしな」「ほんの」「たいした」「（−も）さる（こと
+ながら）」「微々たる」「堂々たる」「単なる」「いかなる」「我が」
+「同じ」「亡き」…
+\end{description}
+
+\subsection{接続詞}
+\subsubsection{接続詞}
+\begin{description}
+\item[＃] 独立に現れる接続詞．
+\item[例：] 「が」「けれども」「そして」「じゃあ」「それどころか」…
+\end{description}
+
+\subsection{助詞}
+\subsubsection{助詞-格助詞-一般}
+\begin{description}
+\item[＃] いわゆる格助詞．
+\item[＊] 「にて」も格助詞に含めた．「の」には格助詞とし
+ての用法と名詞と名詞を接続するいわゆる「ＡのＢ」用法があるが，
+後者は「助詞 連体化」とした．
+\item[例：] 「から」「が」「で」「と」「に」「へ」「より」「を」
+「の」「にて」
+\end{description}
+
+\subsubsection{助詞-格助詞-引用}
+\begin{description}
+\item[＃] 名詞，人物の台詞「」，会議の決定事項，理由，判決，推測
+表現等の直後の「と」．
+\item[例：] 「（〜だ）と（述べた．）」「（〜である）と（して執行
+猶予...）」
+\end{description}
+
+\subsubsection{助詞-格助詞-連語}
+\begin{description}
+\item[＃] 格助詞と動詞との連語で，主に格助詞に相当するような働きを持つもの．
+\item[例：] 「という」「といった」「とかいう」「として」「ととも
+に」「と共に」「でもって」「にあたって」「に当たって」「に当って」「に
+あたり」「に当たり」「に当り」「に当たる」「にあたる」「において」「に
+於いて」「に於て」「における」「に於ける」「にかけ」「にかけて」「にか
+んし」「に関し」「にかんして」「に関して」「にかんする」「に関する」
+「に際し」「に際して」「にしたがい」「に従い」「に従う」「にしたがって」
+「に従って」「にたいし」「に対し」「にたいして」「に対して」「にたいす
+る」「に対する」「について」「につき」「につけ」「につけて」「につれ」
+「につれて」「にとって」「にとり」「にまつわる」「によって」「に依って」
+「に因って」「により」「に依り」「に因り」「による」「に依る」「に因る」
+「にわたって」「にわたる」「をもって」「を以って」「を通じ」「を通じて」
+「を通して」「をめぐって」「をめぐり」「をめぐる」「って＜口語＞」「ちゅ
+う＜関西弁「という」＞」「（何）ていう（人）＜口語＞」「っていう＜口語
+＞」「といふ」「とかいふ」
+\end{description}
+
+\subsubsection{助詞-接続助詞}
+\begin{description}
+\item[例：] 「から」「からには」「が」「けれど」「けれども」「けど」
+「し」「つつ」「て」「で」「と」「ところが」「どころか」「とも」「ども」
+「ながら」「なり」「ので」「のに」「ば」「ものの」「や（〜した）」「や
+いなや」「（ころん）じゃ（いけない）＜口語＞」「（行っ）ちゃ（いけない）
+＜口語＞」「（言っ）たって（しかたがない）＜口語＞」「（それがなく）っ
+たって（平気）＜口語＞」
+\end{description}
+
+\subsubsection{助詞-係助詞}
+\begin{description}
+\item[例：] 「こそ」「さえ」「しか」「すら」「は」「も」「ぞ」
+\end{description}
+
+\subsubsection{助詞-副助詞}
+\begin{description}
+\item[例：] 「がてら」 「かも」「くらい」「位」「ぐらい」「しも」
+「（学校）じゃ（これが流行っている）＜口語＞」「（それ）じゃあ（よくな
+い）＜口語＞」「ずつ」「（私）なぞ」「など」「（私）なり（に）」「（先
+生）なんか（大嫌い）＜口語＞」「（私）なんぞ」「（先生）なんて（大嫌い）
+＜口語＞」「のみ」「だけ」「（私）だって＜口語＞」「だに」「（彼）った
+ら＜口語＞」「（お茶）でも（いかが）」「等（とう）」「（今後）とも」
+「ばかり」「ばっか＜口語＞」「ばっかり＜口語＞」「ほど」「程」「まで」
+「迄」「（誰）も（が）（［助詞-格助詞］および［助詞-係助詞］の前に位
+置する「も」）
+\end{description}
+
+\subsubsection{助詞-並立助詞}
+\begin{description}
+\item[例：] 「と」「たり」「だの」「だり」「とか」「なり」「や」「やら」
+\end{description}
+
+\subsubsection{助詞-終助詞}
+\begin{description}
+\item[例：] 「かい」「かしら」「さ」「ぜ」「（だ）っけ＜口語＞」「（と
+まってる）で＜方言＞」「な」「ナ」「なあ＜口語＞」「ぞ」「ね」「ネ」
+「ねぇ＜口語＞」「ねえ＜口語＞」「ねん＜方言＞」「の」「のう＜口語＞」
+「や」「よ」「ヨ」「よぉ＜口語＞」「わ」「わい＜口語＞」
+\item[＊] 終助詞の「や」は「（まあいい）や」「（すごい）や」など．
+関西方言の断定の「や」は，不変化活用の助動詞として扱う．
+\end{description}
+
+\subsubsection{助詞-副助詞／並立助詞／終助詞}
+\begin{description}
+\item[＃]  「か」のうち，副助詞，並立助詞，終助詞いずれかわからないも
+の，たとえば，次の(a)(b)(c)のようなもの．
+\item[＃] (a)「ＡかＢか」型．例：:「（国内で運用する）か，（海外で運用
+する）か（．）」
+\item[＃] (b)副詞節中．例：「（幸いという）か（，死者はいなかった．）」
+「（祈りが届いたせい）か（，試験に合格した．）」
+\item[＃] (c)「かのように」．例：「（何もなかった）か（のように振る舞っ
+た．）」
+\item[例：] 「か」
+\item[＊] 最新のIPA品詞体系では，これをさらに「副助詞」「並立助詞」
+「終助詞」に細分類しているが，本体系では区別しなかった．
+\end{description}
+
+\subsubsection{助詞-連体化}
+\begin{description}
+\item[＃] [名詞]に接続して体言にかかる「の」．
+\item[＊] THiMCO97では，この用法の「の」も格助詞に分類されている．
+\end{description}
+
+\subsubsection{助詞-副詞化}
+\begin{description}
+\item[＃] 擬音語，擬声語，擬態語及びそれに類する名詞や副詞の直後の「に」
+「と」．
+\item[例：] 「に」「と」
+\item[＊] ただし，「する」「なる」に係っているもので，状態変化を表す場合は格助詞とする．
+\end{description}
+
+\subsubsection{助詞-特殊}
+\begin{description}
+\item[＃] 以上の分類にあてはまらないもの．短歌や俳句等に用いられる助詞などを含む．
+\item[例：] 「かな」「けむ」「（〜しただろう）に」「（あんた）にゃ（わからん）」「（俺）ん（家）」
+\end{description}
+
+\subsubsection{助詞-間投助詞}
+\begin{description}
+\item[＃] IPA辞書には元々なかった品詞．文語的な用法をもつ．
+ipadic2.4以降で定義した．
+\item[例：] 「(松島)や」
+\end{description}
+
+
+\subsection{助動詞}
+
+\subsubsection{助動詞\  五段・ラ行アル  【活用形】  }
+\begin{description}
+\item[＃] 動詞型の活用の助動詞．「である」「ではある」などの「ある」．
+\item[例：] 「ある」
+\end{description}
+
+\subsubsection{助動詞  五段・ラ行ゴザル  【活用形】  }
+\begin{description}
+\item[＃] 動詞型の活用の助動詞「ござる」．
+\item[例：] 「ござる」
+\end{description}
+
+\subsubsection{助動詞  形容詞・イ段  【活用形】}
+\begin{description}
+\item[＃] 形容詞型活用の助動詞．
+\item[例：] 「らしい」
+\end{description}
+
+\subsubsection{助動詞  特殊・ナイ  【活用形】}
+\begin{description}
+\item[＃] 否定の助動詞「ない」の活用型．
+\item[例：] 「ない」
+\end{description}
+
+\subsubsection{助動詞  特殊・タ  【活用形】}
+\begin{description}
+\item[＃] 完了を表す助動詞「た」の活用型．
+\item[例：] 「た」「だ」
+\item[＊] 「(学ん)だ」「(泳い)だ」のように五段活用のガ行，ナ行，
+バ行，マ行に接続する場合には表層形が「だ」になるため，本体系では，
+それぞれ別の語幹をもつ形態素として定義した．
+\end{description}
+
+\subsubsection{助動詞  特殊・ダ  【活用形】}
+\begin{description}
+\item[＃] 断定の助動詞「だ」の活用型．
+\item[例：] 「だ」
+\end{description}
+
+\subsubsection{助動詞  特殊・デス  【活用形】}
+\begin{description}
+\item[＃] 断定の助動詞「です」の活用型．
+\item[例：] 「です」
+\end{description}
+
+\subsubsection{助動詞  特殊・ドス  【活用形】}
+\begin{description}
+\item[＃] 断定の助動詞「どす」の活用型．
+\item[例：] 「どす」
+\end{description}
+
+\subsubsection{助動詞  特殊・ジャ  【活用形】}
+\begin{description}
+\item[＃] 断定の助動詞「じゃ」の活用型．
+\item[例：] 「じゃ」
+\item[＊] 断定の「だ」が鈍ったもの．
+\end{description}
+
+\subsubsection{助動詞  特殊・マス  【活用形】}
+\begin{description}
+\item[＃] 謙譲・丁寧を表わす助動詞「ます」の活用型．
+\item[例：] 「ます」
+\end{description}
+
+\subsubsection{助動詞  特殊・ヌ  【活用形】}
+\begin{description}
+\item[＃] 否定の助動詞「ぬ」の活用型．
+\item[例：] 「ぬ」
+\end{description}
+
+\subsubsection{助動詞  特殊・ヤ  【活用形】}
+\begin{description}
+\item[＃] 関西方言の断定を表す助動詞．
+\item[例：] 「(そう)や」
+\end{description}
+
+\subsubsection{助動詞  不変化型  【活用形】}
+\begin{description}
+\item[＃] 現代では活用しない助動詞．活用が想定できない口語や方言も含む．
+\item[例：] 「う」「まい」「（いざ行か）ん（む）」「(去り)ぬ」
+「（わから）ん＜口語＞」「（賜ラ）ン」「〜（美しい／学生）じゃん＜口語＞」
+「（いい）っす＜口語＞」「（負けてなら）じ」など．
+\end{description}
+
+\subsubsection{助動詞  文語・？？  【活用形】}
+\begin{description}
+\item[＃] 文語の助動詞．現在定義されている活用型は次の通り．
+「文語・ベシ」「文語・ゴトシ」「文語・ナリ」「文語・マジ」
+「文語・シム」「文語・キ」「文語・ケリ」「文語・ル」「文語・リ」
+\item[例：] 「べし」「ごとし」「如し」「たり」「なり」「まじ」「き」「けり」「り」「る」
+\item[＊] IPA品詞体系では，「じ」のための活用型が用意されている
+が，実際には不変化であるので，ここでは不変化型とした．
+\end{description}
+
+
+\subsection{感動詞}
+\subsubsection{感動詞}
+\begin{description}
+\item[＃] 感動詞．あいさつなど．
+\item[例：] 「おはよう」「おはようございます」「こんにちは」「こ
+んばんは」「ありがとう」「どうもありがとう」「ありがとうございま
+す」「いただきます」「ごちそうさま」「さよなら」「さようなら」
+「はい」「いいえ」「ごめん」「ごめんなさい」…
+\end{description}
+
+
+\subsection{記号}
+
+\subsubsection{記号-一般}
+\begin{description}
+\item[＃] 以下の分類以外の一般的な記号．
+\item[例：] 「○」「◎」「＠」「＄」「〒」「→」「＋」など．
+\end{description}
+
+\subsubsection{記号-アルファベット}
+\begin{description}
+\item[＃] 英語のアルファベット．大文字，小文字．
+\item[例：] 「Ａ」「ａ」
+\end{description}
+
+\subsubsection{記号-句点}
+\begin{description}
+\item[＃] いわゆる句点．
+\item[例：] 「．」「．」
+\end{description}
+
+\subsubsection{記号-読点}
+\begin{description}
+\item[＃] いわゆる読点．
+\item[例：] 「，」「，」
+\end{description}
+
+\subsubsection{記号-空白}
+\begin{description}
+\item[＃] 全角の空白文字（画面上には見えない）．
+\end{description}
+
+\subsubsection{記号-括弧開}
+\begin{description}
+\item[例：] 「（」「｛」「‘」「“」「『」「【」…
+\end{description}
+
+\subsubsection{記号-括弧閉}
+\begin{description}
+\item[例：] 「）」「｝」「’」「”」「』」「】」…
+\end{description}
+
+\subsection{フィラー}
+
+\subsubsection{フィラー}
+\begin{description}
+\item[＃] 話し言葉で起こるあいずちや挿入的な音声ことば
+\item[例：] 「あの」「うんと」「えと」
+\end{description}
+
+
+\subsection{その他}
+
+\subsubsection{その他-間投}
+\begin{description}
+\item[＃] ［名詞-接尾］や，［助詞-終助詞］としにくいもの．
+\item[例：] 「（だ）ァ」
+\end{description}
+
+
+
+
+%----------------------------------------%
+%           参考文献                     %
+%----------------------------------------%
+\begin{thebibliography}{88)}
+\addcontentsline{toc}{section}{参考文献}
+
+\bibitem{Masuoka92}
+  \newblock {益岡隆志，田窪行則：}
+  \newblock {『基礎日本語文法 --改訂版--』}
+  \newblock {くろしお出版，}
+  \newblock {1992.}
+
+\bibitem{man:juman}
+  \newblock {松本裕治，黒橋禎夫，宇津呂武仁，妙木裕，長尾真：}
+  \newblock {「日本語形態素解析システムJUMAN 使用説明書 version 2.0」，}
+  \newblock {NAIST Technical Report, NAIST-IS-TR94025，}
+  \newblock {1994.}
+
+ \bibitem{Yamashita97:mthesis}  
+   \newblock {山下達雄：}  
+   \newblock {「規則と確率モデルの統合による形態素解析」，}  
+   \newblock {奈良先端科学技術大学院大学修士論文, NAIST-IS-MT9551119，}  
+   \newblock {March 1997.}  
+   
+ \bibitem{Yamashita97:signl119}  
+   \newblock {山下達雄，松本裕治：}  
+   \newblock {「コスト最小法と確率モデルの統合による形態素解析」，}  
+   \newblock {情報処理学会研究報告 96-NL-119，}  
+   \newblock {May 1997.}  
+  
+\bibitem{Kitauchi97:nlp1997}
+  \newblock {北内 啓，山下 達雄，松本 裕治：}
+  \newblock {「日本語形態素解析システムへの可変長連接規則の実装」,}
+  \newblock {言語処理学会第三回年次大会論文集, pp.437-440,}
+  \newblock {1997.}
+
+\bibitem{IPAreport}
+  \newblock {「研究開発用知的資源タグ付きテキストコーパス報告書」平成９年度,}
+  \newblock {テキストサブワーキンググループ,\
+技術研究組合 新情報処理開発機構,}
+  \newblock {1998.}
+
+\bibitem{Matsuda1999:mthesis}  
+   \newblock {松田 寛：}  
+   \newblock {「品詞タグ付きコーパス作成支援環境の構築」，}  
+   \newblock {奈良先端科学技術大学院大学修士論文, NAIST-IS-MT9851103，}  
+   \newblock {March 1999.}  
+   
+ \bibitem{Kitauchi99:ipsj40-5}  
+   \newblock {北内 啓, 宇津呂 武仁, 松本 裕治：}  
+   \newblock {「誤り駆動型の素性選択による日本語形態素解析の確率モデル学習」,}  
+   \newblock {情報処理学会論文誌 Vol. 40, No. 5, p.p.2325-2337,}  
+   \newblock {May 1999.}  
+   
+ \bibitem{Matsuda99:signl134}  
+   \newblock {松田 寛, 桐山 和久, 山田 悟史, 吉野 圭一, 松本裕治：}  
+   \newblock {「部分形態素解析を用いたコーパスの品詞体系変換」,}  
+   \newblock {情報処理学会研究報告 99-NL-134, p.p.23-30,}  
+   \newblock {Nov. 1999.}  
+   
+ \bibitem{Asahara2000:mthesis}  
+   \newblock {Masayuki Asahara：}  
+   \newblock {Extended Statistical Model for Morphological Analysis,}  
+   \newblock {奈良先端科学技術大学院大学修士論文, NAIST-IS-MT9851001，}  
+   \newblock {March 2000.}  
+   
+ \bibitem{Matsuda2000:signl137}  
+   \newblock {松田 寛, 松本 裕治：}  
+   \newblock {「品詞タグ付きコーパス作成支援 GUI ツール VisualMorphs」,}  
+   \newblock {情報処理学会研究報告 2000-NL-137, p.98,}  
+   \newblock {June, 2000.}  
+   
+ \bibitem{Asahara2000:signl137}  
+   \newblock {浅原 正幸, 松本 裕治：}  
+   \newblock {「統計的日本語形態素解析に対する拡張 HMM モデル」,}  
+   \newblock {情報処理学会研究報告 2000-NL-137, p.p.39-46,}  
+   \newblock {June, 2000.}  
+   
+ \bibitem{Asahara2000:coling2000}  
+   \newblock {Masayuki Asahara, Yuji Matsumoto：}  
+   \newblock {Extended Models and Tools for High-performance Part-of-Speech Tagger,}  
+   \newblock {Proceedings of COLING 2000,}  
+   \newblock {July, 2000.}  
+   
+ \bibitem{Asahara2000:signl139}  
+   \newblock {浅原 正幸, 松本 裕治：}  
+   \newblock {「誤り駆動による統計的品詞タグづけモデルの拡張」,}  
+   \newblock {情報処理学会研究報告 2000-NL-139, p.p.25-32,}  
+   \newblock {Sep. 2000.}  
+   
+ \bibitem{Matsu2000:ipsjmagazine41-11}  
+   \newblock {松本 裕治：}  
+   \newblock {「形態素解析システム『茶筌』」,}  
+   \newblock {情報処理 Vol.41 No.11, p.p.1208-1214,}  
+   \newblock {Nov. 2000.}  
+   
+ \bibitem{Den2001}  
+   \newblock {伝 康晴，浅原 正幸：}  
+   \newblock {「リレーショナル・データベースによる統合的言語資源管理環境」,}  
+   \newblock {ワークショップ「話し言葉の科学と工学」,}  
+   \newblock {Feb. 2001.}  
+   
+ \bibitem{Matsu2001:signl143}  
+   \newblock {松本 裕治，伝 康晴：}  
+   \newblock {「話し言葉の形態素解析」,}  
+   \newblock {情報処理学会研究報告 2001-NL-143, p.p.49-54,}  
+   \newblock {May, 2001.}  
+
+ \bibitem{Asahara2001:ld2001}  
+   \newblock {Masayuki Asahara and Ryuichi Yoneda and Yuji Matsumoto：}  
+   \newblock {「Use of a Relational Database in the Development and Maintenance of
+     Linguistic Resources for Statistical Japanese Morphological Analysis」,}  
+   \newblock {IRCS Workshop on Linguistic Databases,}  
+   \newblock {Dec. 2001.}  
+
+ \bibitem{Asahara2002:ipsj4303}  
+   \newblock {浅原 正幸, 松本 裕治：}  
+   \newblock {「形態素解析のための拡張統計モデル」,}  
+   \newblock {情報処理学会論文誌, Vol.43 No.03,}  
+   \newblock {Mar. 2002.}  
+
+ \bibitem{Asahara2002:sigslud34}  
+   \newblock {浅原 正幸，米田 隆一，山下 亜希子，伝 康晴， 松本 裕治：}  
+   \newblock {「リレーショナルデータベースによる品詞タグつきコーパスの管理手法」,}  
+   \newblock {SIG-SLUD-34}  
+   \newblock {Mar. 2002.}  
+
+ \bibitem{Asahara2002:lrec2002}  
+   \newblock {Masayuki Asahara and Ryuichi Yoneda and Akiko Yamashita and
+     Yasuharu Den and Yuji Matsumoto：}  
+   \newblock {「Use of XML and Relational Databases for Consistent Development
+     and Maintenance of Lexicons and Annotated Corpora」,}  
+   \newblock {LREC 2002,}  
+   \newblock {May. 2002.}  
+
+ \bibitem{Asahara2002:ipsj4307}  
+   \newblock {浅原 正幸，米田 隆一，山下 亜希子，伝 康晴，松本 裕治：}  
+   \newblock {「語長変換を考慮したコーパス管理システム」,}  
+   \newblock {情報処理学会論文誌, Vol.43 No.07,}  
+   \newblock {Jul. 2002.}  
+
+ \bibitem{Asahara2003:signl134}  
+   \newblock {浅原 正幸, 松本 裕治：}  
+   \newblock {「形態素解析とチャンキングの組み合わせによる日本語テキスト中の未知語出現箇所同定」,}  
+   \newblock {情報処理学会研究報告 2003-NL-154, }  
+   \newblock {Mar. 2003.}  
+   
+\end{thebibliography}
+
+%----------------------------------------%
+\clearpage
+
+\appendix
+\noindent
+{\LARGE\bf 付録}
+\addcontentsline{toc}{section}{付録}
+
+\section{変更点}
+\subsection{ipadic-2.6.3 から ipadic-2.7.0 への変更点}
+
+変更点は
+\verb+http://chasen.aist-nara.ac.jp/~masayu-a/ipadic/arch/ipadic-2.7.0-diff.txt+
+にあります．
+
+\begin{itemize}
+ \item 旭化成の水嶋さんから多くの未登録語および誤り事例を報告していただ
+       きました．
+ \item １ｂｙｔｅ文字を Onebyte.dic へと別ファイルにした。
+ \item 活用形・活用型定義変更
+       「形容詞・イイ」「特殊・ドス」の導入
+\end{itemize}
+
+\subsection{ipadic-2.6.2 から ipadic-2.6.3 への変更点}
+
+変更点は
+\verb+http://chasen.aist-nara.ac.jp/~masayu-a/ipadic/arch/ipadic-2.6.3-diff.txt+
+にあります．
+
+\begin{itemize}
+ \item 国語研の峯さんから誤り事例を報告していただきました．
+ \item 順天大学の宋さんから誤り事例を報告していただきました．
+ \item 旭化成の水嶋さんから多くの未登録語および誤り事例を報告していただ
+       きました．
+\end{itemize}
+
+\subsection{ipadic-2.6.1 から ipadic-2.6.2 への変更点}
+
+連接表のパラメータを改善致しました．
+辞書エントリに変更はありません．
+
+\subsection{ipadic-2.6.0 から ipadic-2.6.1 への変更点}
+
+辞書エントリに変更はありません．
+
+\begin{itemize}
+ \item chasenrc の修正．
+ \item 茶筌 2.3.2 への対応．
+\end{itemize}
+
+\subsection{ipadic-2.5.1 から ipadic-2.6.0 への変更点}
+
+ipadic-2.5.1 と ipadic-2.6.0 は全く同じ品詞体系を採用しています．
+
+\begin{itemize}
+ \item 長崎大学の鶴丸先生から頂いた未登録語（約 6000 語）を登録した．
+       ここに記して感謝致します．
+
+       変更点は
+       \verb+http://chasen.aist-nara.ac.jp/~masayu-a/ipadic/arch/ipadic-2.6.0-diff.txt+
+       にあります．
+ \item その他追加した単語は
+       \verb+http://chasen.aist-nara.ac.jp/~masayu-a/ipadic/arch/ipadic-2.6.0-add.txt+
+       にあります．
+ \item 茶筌 2.3.1 への対応．
+ \begin{itemize}
+  \item .pat, .ary 生成部分の削除
+  \item ダブル配列辞書 dadic への対応
+  \item 文字コード変更オプション -i への対応
+ \end{itemize}
+\end{itemize}
+
+\subsection{ipadic-2.5.0 から ipadic-2.5.1 への変更点}
+
+ipadic-2.5.0 と ipadic-2.5.1 は全く同じ品詞体系を採用しています．
+
+\begin{itemize}
+ \item 「助詞-格助詞-連語」相当語句を別ファイル {\tt Postp-col.dic}にし
+た．
+ \item 一段動詞や助動詞周りのパラメータの変更を行なった．
+ \item 新規登録語のリストは
+      \verb+http://chasen.aist-nara.ac.jp/~masayu-a/ipadic/arch/ipadic-2.5.1-newword.txt+
+      にあります．
+\end{itemize}
+
+\subsection{ipadic-2.4.X から ipadic-2.5.0 への変更点}
+
+ipadic-2.4.X と ipadic-2.5.0 は全く同じ品詞体系を採用しています．
+
+\section{辞書の著作権}
+
+本辞書は ICOT の研究成果物を含んでいます．
+
+二次配布の際には，以下の文面を添付するようにしてください．
+
+Copyright @copyright{} 2000, 2001, 2002, 2003 Nara Institute of Science and Technology.  All Rights Reserved.
+
+Use, reproduction, and distribution of this software is permitted.
+Any copy of this software, whether in its original form or modified,
+must include both the above copyright notice and the following
+paragraphs.
+
+Nara Institute of Science and Technology (NAIST),
+the copyright holders, disclaims all warranties with regard to this
+software, including all implied warranties of merchantability and
+fitness, in no event shall NAIST be liable for
+any special, indirect or consequential damages or any damages
+whatsoever resulting from loss of use, data or profits, whether in an
+action of contract, negligence or other tortuous action, arising out
+of or in connection with the use or performance of this software.
+
+A large portion of the dictionary entries
+originate from ICOT Free Software.  The following conditions for ICOT
+Free Software applies to the current dictionary as well.
+
+Each User may also freely distribute the Program, whether in its
+original form or modified, to any third party or parties, PROVIDED
+that the provisions of Section 3 ("NO WARRANTY") will ALWAYS appear
+on, or be attached to, the Program, which is distributed substantially
+in the same form as set out herein and that such intended
+distribution, if actually made, will neither violate or otherwise
+contravene any of the laws and regulations of the countries having
+jurisdiction over the User or the intended distribution itself.
+
+NO WARRANTY
+
+The program was produced on an experimental basis in the course of the
+research and development conducted during the project and is provided
+to users as so produced on an experimental basis.  Accordingly, the
+program is provided without any warranty whatsoever, whether express,
+implied, statutory or otherwise.  The term "warranty" used herein
+includes, but is not limited to, any warranty of the quality,
+performance, merchantability and fitness for a particular purpose of
+the program and the nonexistence of any infringement or violation of
+any right of any third party.
+
+Each user of the program will agree and understand, and be deemed to
+have agreed and understood, that there is no warranty whatsoever for
+the program and, accordingly, the entire risk arising from or
+otherwise connected with the program is assumed by the user.
+
+Therefore, neither ICOT, the copyright holder, or any other
+organization that participated in or was otherwise related to the
+development of the program and their respective officials, directors,
+officers and other employees shall be held liable for any and all
+damages, including, without limitation, general, special, incidental
+and consequential damages, arising out of or otherwise in connection
+with the use or inability to use the program or any product, material
+or result produced or otherwise obtained by using the program,
+regardless of whether they have been advised of, or otherwise had
+knowledge of, the possibility of such damages at any time during the
+project or thereafter.  Each user will be deemed to have agreed to the
+foregoing by his or her commencement of use of the program.  The term
+"use" as used herein includes, but is not limited to, the use,
+modification, copying and distribution of the program and the
+production of secondary products from the program.
+
+In the case where the program, whether in its original form or
+modified, was distributed or delivered to or received by a user from
+any person, organization or entity other than ICOT, unless it makes or
+grants independently of ICOT any specific warranty to the user in
+writing, such person, organization or entity, will also be exempted
+from and not be held liable to the user for any such damages as noted
+above as far as the program is concerned.
+
+\end{document}
+%#LPR pdvips ipadic-ja.dvi -o ipadic-ja.ps

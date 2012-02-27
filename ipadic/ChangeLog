@@ -1,0 +1,229 @@
+2003-11-15  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* 記号の整備
+	1 byte 文字列を Onebyte.dic に分離
+
+2003-11-09  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* parameter update
+	ctypes.cha の変更
+	cforms.cha の変更
+	「特殊・ドス」
+	「形容詞・イイ」
+	「サ変・スル   未然形」
+
+2003-08-13  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* parameter update
+
+	http://chasen.aist-nara.ac.jp/~masayu-a/ipadic/arch/ipadic-2.6.3-diff.txt 
+	
+	* doc/ipadic-ja.tex: 
+	Manual Modified
+
+2003-08-08  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* parameter update
+	for "NAI" problem
+
+	for postposition
+
+2003-08-04  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* parameter update
+	for "NAI" problem
+
+2003-08-01  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* Makefile.am
+	config for chasen-2.3.2
+	
+	* chasenrc
+
+2003-06-12  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* Makefile.am configure.in: 
+	remove entries for .pat .ary
+    -i option for makeint, makemat (chasen-2.3.1)
+	
+2003-06-11  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* Manual Modified
+	typo 
+
+2003-06-10  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* Manual Modified
+
+	* Added Dictionary entries 
+	http://chasen.aist-nara.ac.jp/~masayu-a/ipadic/arch/ipadic-2.6.0-add.txt
+	
+2003-06-05  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* Manual Modified
+	texi files are replaced by tex file
+
+2003-06-04  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* Dictionary entries and Parameters updated
+	thanks to Prof. Tsurumaru (nagasaki-u)
+	http://chasen.aist-nara.ac.jp/~masayu-a/ipadic/arch/ipadic-2.6.0-diff.txt
+
+2002-11-29  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* Makefile.am chasenrc.in configure.in
+	modification for makeda (double array dictionary looking up module)
+
+2002-01-30  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* parameter modified 
+	"mada" problems
+
+2002-01-26  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* modified documents
+
+2002-01-18  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* modified dictionary entries is in 
+	http://chasen.aist-nara.ac.jp/~masayu-a/ipadic/arch/ipadic-2.5.1-newword.txt
+
+2001-11-18  Masayuki Asahara  <masayu-a@chasen.aist-nara.ac.jp>
+
+	* "Shiraseru" and "Nakusu" need to reduce cost
+
+2001-10-24  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* dictionary update for ipadic-2.5.1-pre5
+	Adnominal Problem
+	"Komaka" removed from Adnominal
+
+2001-10-23  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* dictionary update for ipadic-2.5.1-pre4
+	Postp-col.dic
+
+2001-10-23  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* dictionary update for ipadic-2.5.1-pre3
+
+2001-10-23  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* dictionary update for ipadic-2.5.1-pre2
+
+2001-10-20  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* dictionary update for ipadic-2.5.1-pre1
+
+2001-07-01  Taku Kudo  <taku-ku@rice.aist-nara.ac.jp>
+
+	* ipadic.spec.in
+
+	Modify to install chasenrc to /usr/etc/chasenrc 
+
+2001-05-12  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* version.cha.in : 
+
+	Add version information
+
+2001-04-11  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* Makefile.bat: 
+	* Makefile.am: 
+
+	SJIS(LF -> CRLF)
+	
+	* Noun.verbal.dic
+	* Noun.org.dic
+
+	Japanese Reading Modification
+
+2001-03-15  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* script/dic-en.pl : 
+	* *.dic :
+	* chasenrc.in :
+
+	Changed to English format
+
+2001-03-13  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* Makefile.am (en-dist): 
+	* data/grammar.tbl
+	* data/ctypes.tbl
+	* data/cforms.tbl
+	* script/dic-en.pl
+	* script/conn-en.pl
+	English POS translation
+
+	* NEWS
+	* NEWS-ja
+	moved Japanese information from NEWS to NEWS-ja
+
+2001-03-02  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+	parameter setting for release-2.4.4
+	
+2001-03-02  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+	* Makefile.am : 
+	* configure.in :     chasenrc path setting
+	
+2001-02-28  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* configure.in : 
+	* Makefile.am :	
+	* doc/Makefile.am :
+	* doc/ipadic-ja.texi :
+	* doc/ipadic-ja.pdf :	
+	* doc/ipadic-v.texi :
+	* doc/texinfo.tex :          move the manual files to doc/
+	                             configurate Makefile.am for texinfo
+
+	* ipadic-ja.texi :           obsolete
+	* ipadic-ja.pdf :	     obsolete
+
+2001-02-28  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* chasenrc.in: uncomment (文法ファイル ...)
+
+2001-02-27  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* ipadic.spec.in : description & doc modified
+
+2001-02-27  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* Makefile.am (chadic.int): sortdic is necesary..
+	* ipadic-ja.texi:
+	* ipadic-ja.pdf:            manual modified
+
+2001-02-24  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* Makefile.am: sortdic are obsolete
+	* connent.cha: Connective Postpositions at the preceding positions 
+	               are grouped.
+
+2001-01-04  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* Makefile.am: output zip format(make sjis-dist)
+
+2000-12-08  Akira Kitauchi  <kitauchi@rd.nttdata.co.jp>
+
+	* chasenrc.in: Commented out the the line for grammar dir.
+
+2000-12-07  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* configure.in: modified `./configure --help`
+
+	* INSTALL-ja: notice about
+	               ./configure --dicdir 
+
+	* Makefile.bat: for Windows
+
+2000-12-06  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+	
+	* ipadic-2.4.0 release
+	
+2000-12-06  Masayuki Asahara  <masayu-a@is.aist-nara.ac.jp>
+
+	* manual.tex: modified the date
+

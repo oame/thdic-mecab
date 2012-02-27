@@ -1,0 +1,25 @@
+0. chasen-2.3.2 以上を必要とします。
+   先に chasen-2.3.2 をインストールしてください．
+
+1. 通常のインストール
+
+   1. `./configure' を実行する．
+      % ./configure
+      インストール先ディレクトリは chasen 側が要求するため
+      自動的に設定される．
+      手動で変更したい場合は以下のように実行する．
+      % ./configure --with-dicdir=/home/masayu-a
+
+   2. `make' を実行する
+      % make
+      OS 標準の make を使うとコンパイルに失敗することがある．
+      その場合は GNU make を使用する．
+
+   3. root 権限で `make install' を実行する．
+      # make install
+      デフォルトでは /usr/local/lib/chasen/dic/ipadic に
+      インストールされる(環境によって多少異なることもある)．
+
+      但し、ユーザのディレクトリにインストールする場合には、
+      root 権限は必要としない。
+
