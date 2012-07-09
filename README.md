@@ -1,24 +1,21 @@
-東方MeCab辞書第二版
-------------------
-author: おおあめ
+# 東方MeCab辞書第三版
+
+maintainer: おおあめ
 
 license: -> LICENSE.md
 
-Required environment
-------------------
-* MeCab
+## Requirements
+* MeCab 0.994
 * Ruby 1.9.x
+* NKF
+* bzip2
+* wget
 
-Quick installation
-------------------
-run ./make.sh
+## Installation
+	./make.sh
 
-Overview
-------------------
-* compile_dict.rb - csv形式の辞書をdic形式に変換します
-* create_middle_dict.rb - thdic/*の語彙データをMeCabフォーマットのcsvに変換します
-* thdic/* - 語彙データ
+## Overview
+* pack_dict.rb - 語彙ファイルを一つに纏めます
 * make.sh - 辞書作成を自動化したシェルスクリプト
-* ipadic/* IPA辞書
 * LICENSE.md - ライセンス
 * README.md - これ

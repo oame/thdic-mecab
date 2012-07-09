@@ -1,13 +1,23 @@
 #!/bin/sh
 
-rm output.mdic
-rm thdic-mecab.dic
-cat thdic/Noun.txt | ./create_middle_dict.rb
-cat thdic/Noun.name.txt | ./create_middle_dict.rb
-# フルネーム辞書。必要ならコメントアウトしてください。
-#cat thdic/Noun.name.full.txt | ./create_middle_dict.rb
-cat thdic/Noun.title.txt | ./create_middle_dict.rb
-cat thdic/Noun.place.txt | ./create_middle_dict.rb
-cat thdic/Prefix.txt | ./create_middle_dict.rb
-cat thdic/Verb.txt | ./create_middle_dict.rb
-./compile_dict.rb output.mdic
+mkdir work
+ruby pack_dict.rb
+mv thdic-mecab.csv work
+cd work
+wget http://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz
+wget http://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.model.bz2
+tar zxvf mecab-ipadic-2.7.0-20070801.tar.gz
+bunzip2 -d mecab-ipadic-2.7.0-20070801.model.bz2
+nkf --overwrite -Ew mecab-ipadic-2.7.0-20070801/*
+nkf --overwrite -Ew mecab-ipadic-2.7.0-20070801.model
+cp ../mecab-ipadic-model.patch ./
+#mv mecab-ipadic-2.7.0-20070801.model mecab-ipadic-2.7.0-20070801.model.orig
+patch < mecab-ipadic-model.patch
+cd mecab-ipadic-2.7.0-20070801
+`mecab-config --libexecdir`/mecab-dict-index -t utf-8 -f utf-8
+cd ../
+`mecab-config --libexecdir`/mecab-dict-index -m mecab-ipadic-2.7.0-20070801.model -d mecab-ipadic-2.7.0-20070801 -u thdic-mecab.dic -f utf-8 -t utf-8 thdic-mecab.csv
+cd ../
+mkdir pkg
+cp work/thdic-mecab.dic pkg
+rm -rf work

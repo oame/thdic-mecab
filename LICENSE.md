@@ -1,8 +1,9 @@
-* 東方MeCab辞書第二版
-author: おおあめ
+* 東方MeCab辞書 第三版
+maintainer: おおあめ
 
 * Special thanks
 - 東方IME的なもの　ver5.1b by moki
+- ipadic-mecab
 
 * License for IPA dic
 
