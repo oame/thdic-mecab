@@ -11,8 +11,9 @@ files = [
   "Noun.title.csv",
   "Noun.org.csv",
   "Noun.place.csv",
-  "Prefix.csv",
-  "Verb.csv"
+  "Adverb.csv",
+  "Verb.csv",
+  "Adnominal.csv"
 ]
 lines = []
 files.each do |file|

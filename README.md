@@ -1,4 +1,4 @@
-# 東方MeCab辞書第三版
+# 東方MeCab辞書 第四版
 
 maintainer: おおあめ
 
@@ -12,11 +12,12 @@ license: -> LICENSE.md
 * wget
 
 ## Installation
-	./make.sh
+	$ bundle install
+	$ ./build.sh
 	# 辞書が自動で作成されます => pkg/thdic-mecab.dic
 
 ## Usage
-	$ mecab -u thdic-mecab.dic
+	$ mecab -u pkg/thdic-mecab.dic
 	椛さん
 	椛	名詞,固有名詞,人名,名,*,*,椛,モミジ,モミジ,東方Project
 	さん	名詞,接尾,人名,*,*,*,さん,サン,サン
@@ -29,7 +30,7 @@ license: -> LICENSE.md
 
 ## Overview
 * pack_dict.rb - 語彙ファイルを一つに纏めます
-* make.sh - 辞書作成を自動化したシェルスクリプト
+* build.sh - 辞書作成を自動化したシェルスクリプト
 * LICENSE.md - ライセンス
 * README.md - これ
 * pkg/thdic-mecab.dic - 生成済みの東方MeCab辞書
