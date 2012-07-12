@@ -7,14 +7,14 @@ license: -> LICENSE.md
 ## Requirements
 * MeCab 0.994
 * Ruby 1.9.x
+* Rake
 * NKF
 * bzip2
 * wget
 
 ## Installation
-	$ bundle install
-	$ ./build.sh
-	# 辞書が自動で作成されます => pkg/thdic-mecab.dic
+	$ rake build #=> 辞書が作成されます [pkg/thdic-mecab.dic]
+	$ rake install #=> 辞書がインストールされます
 
 ## Usage
 	$ mecab -u pkg/thdic-mecab.dic
@@ -29,8 +29,8 @@ license: -> LICENSE.md
 	EOS
 
 ## Overview
-* pack_dict.rb - 語彙ファイルを一つに纏めます
-* build.sh - 辞書作成を自動化したシェルスクリプト
+* Rakefile - 自動処理を記述したファイル
 * LICENSE.md - ライセンス
+* CHANGELOG.md - 変更履歴
 * README.md - これ
 * pkg/thdic-mecab.dic - 生成済みの東方MeCab辞書
