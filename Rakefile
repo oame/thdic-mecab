@@ -1,8 +1,5 @@
 #!/usr/bin/env rake
 
-require "MeCab"
-require "nkf"
-
 IPADIC = "mecab-ipadic-2.7.0-20070801"
 IPADIC_ARC = "#{IPADIC}.tar.gz"
 IPADIC_MODEL = "mecab-ipadic-2.7.0-20070801.model"
