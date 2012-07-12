@@ -1,7 +1,8 @@
 # 東方MeCab辞書 第四版
 
-maintainer: おおあめ
+東方Projectに登場する人物や動詞、形容詞等をMeCabで扱えるようにするための辞書です。
 
+maintainer: おおあめ
 license: -> LICENSE.md
 
 ## Requirements
