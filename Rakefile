@@ -58,6 +58,7 @@ task :build do
   system "rm -rf tmp"
 end
 
+desc "Install thdic-mecab to your computer"
 task :install do
   mecab_dicdir = `mecab-config --dicdir`.strip
   if FileTest.exists? "pkg/thdic-mecab.dic"
