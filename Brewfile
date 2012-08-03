@@ -2,4 +2,3 @@
 # https://github.com/oame/vintner
 
 brew "mecab"
-brew "crf++"
