@@ -1,11 +1,11 @@
 * 東方MeCab辞書 第三版
-maintainer: おおあめ
+Maintainer: おおあめ
 
-* Special thanks
-- 東方IME的なもの　ver5.1b by moki
-- ipadic-mecab
+* 当辞書を作成するにあたり、参考にさせて頂いたリソースのリストです。  
+- 東方IME的なもの　ver5.1b by moki(http://starrish.web.fc2.com/thime/)
+- mecab-ipadic(http://mecab.googlecode.com/svn/trunk/mecab/doc/index.html)
 
-* License for IPA dic
+* IPA Dic License
 
 Copyright @copyright 2000, 2001, 2002, 2003 Nara Institute of Science and Technology.
 All Rights Reserved.
