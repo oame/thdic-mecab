@@ -1,0 +1,12 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    rake (0.9.2.2)
+    vintner (1.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rake
+  vintner
