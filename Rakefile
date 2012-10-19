@@ -76,6 +76,6 @@ task :install do
       system "echo 'userdic = #{mecab_dicdir}/thdic/thdic-mecab.dic' >> #{mecab_confdir}/mecabrc"
     end
   else
-    puts "thdic [pkg/thdic-mecab.dic] not found! Run first 'rake build'"
+    puts "not found thdic[pkg/thdic-mecab.dic]! Run first 'rake build'"
   end
 end
