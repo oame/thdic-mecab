@@ -15,20 +15,28 @@ license: -> LICENSE.md
 * wget
 
 ## Installation
-	$ rake build #=> 辞書が作成されます [pkg/thdic-mecab.dic]
-	$ rake install #=> 辞書がインストールされます
+```bash
+$ rake install #=> 辞書がインストールされます
+```
 
 ## Usage
-	$ mecab -u pkg/thdic-mecab.dic
-	椛さん
-	椛	名詞,固有名詞,人名,名,*,*,椛,モミジ,モミジ,東方Project
-	さん	名詞,接尾,人名,*,*,*,さん,サン,サン
-	EOS
-	椛の紅葉
-	椛	名詞,一般,*,*,*,*,椛,モミジ,モミジ
-	の	助詞,連体化,*,*,*,*,の,ノ,ノ
-	紅葉	名詞,サ変接続,*,*,*,*,紅葉,コウヨウ,コーヨー
-	EOS
+```bash
+$ mecab -u pkg/thdic-mecab.dic
+椛さん
+椛	名詞,固有名詞,人名,名,*,*,椛,モミジ,モミジ,東方Project
+さん	名詞,接尾,人名,*,*,*,さん,サン,サン
+EOS
+椛の紅葉
+椛	名詞,一般,*,*,*,*,椛,モミジ,モミジ
+の	助詞,連体化,*,*,*,*,の,ノ,ノ
+紅葉	名詞,サ変接続,*,*,*,*,紅葉,コウヨウ,コーヨー
+EOS
+```
+
+## Build Dictionary
+```bash
+$ rake build #=> 辞書が作成されます [pkg/thdic-mecab.dic]
+```
 
 ## Overview
 * Rakefile - 自動処理を記述したファイル
