@@ -7,8 +7,8 @@ maintainer: おおあめ
 license: -> LICENSE.md
 
 ## Requirements
-* MeCab 0.994
-* Ruby 1.9.x
+* MeCab 0.994+
+* Ruby 1.9.x+
 * Rake
 * NKF
 * bzip2
