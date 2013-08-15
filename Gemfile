@@ -1,4 +1,3 @@
-source :rubygems
+source "https://rubygems.org"
 
-gem "vintner"
 gem "rake"
