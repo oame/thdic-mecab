@@ -37,6 +37,7 @@ EOS
 ### Requirements
 
 - MeCab
+- nkf
 
 ```bash
 $ rake build #=> 辞書が作成されます [pkg/thdic-mecab.dic]
