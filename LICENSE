@@ -1,9 +1,10 @@
 * 東方MeCab辞書 第三版
 Maintainer: おおあめ
 
-* 当辞書を作成するにあたり、参考にさせて頂いたリソースのリストです。  
-- 東方IME的なもの　ver5.1b by moki(http://starrish.web.fc2.com/thime/)
-- mecab-ipadic(http://mecab.googlecode.com/svn/trunk/mecab/doc/index.html)
+* 当辞書を作成するにあたり、参考にさせて頂いたリソースのリストです。
+- 東方Wiki http://thwiki.info
+- 東方IME的なもの　ver5.1b by moki http://starrish.web.fc2.com/thime/
+- mecab-ipadic http://mecab.googlecode.com/svn/trunk/mecab/doc/index.html
 
 * IPA Dic License
 
